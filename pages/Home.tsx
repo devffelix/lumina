@@ -158,7 +158,7 @@ const Home: React.FC = () => {
     if (verse && navigator.share) {
       try {
         await navigator.share({
-          title: 'Versículo do Dia - Lumina',
+          title: 'Versículo do Dia - Shalom',
           text: `"${verse.text}" - ${verse.ref}`,
         });
       } catch (err) {
@@ -187,12 +187,12 @@ const Home: React.FC = () => {
             // Try native sharing first (mobile feel)
             if (navigator.share) {
                  const blob = await (await fetch(image)).blob();
-                 const file = new File([blob], 'oracao-lumina.png', { type: blob.type });
+                 const file = new File([blob], 'oracao-shalom.png', { type: blob.type });
                  if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({
                         files: [file],
                         title: 'Minha Oração',
-                        text: 'Uma oração especial do app Lumina.',
+                        text: 'Uma oração especial do app Shalom.',
                     });
                     return;
                  }
@@ -400,7 +400,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
                 
-                <div>
+                <div className="dark:bg-stone-900 bg-transparent rounded-2xl">
                     <h4 className="font-serif font-bold text-2xl mb-1">Momento de Louvor</h4>
                     <p className="text-stone-400 text-sm">Descubra músicas que tocam a alma.</p>
                 </div>
@@ -522,7 +522,7 @@ const Home: React.FC = () => {
                             <span className="absolute -bottom-10 right-0 text-8xl text-gold/10 font-serif leading-none">"</span>
                         </div>
                         
-                        <div className="text-xs text-subtle font-bold uppercase tracking-widest mt-8 mb-2">Lumina App</div>
+                        <div className="text-xs text-subtle font-bold uppercase tracking-widest mt-8 mb-2">Shalom App</div>
                     </div>
                     )}
                 </div>

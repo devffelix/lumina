@@ -68,7 +68,7 @@ const Settings: React.FC = () => {
     <div className="animate-fade-in space-y-8 pb-10">
       <div className="px-2">
         <h2 className="text-3xl font-serif font-bold text-ink dark:text-white mb-2">Configurações</h2>
-        <p className="text-subtle text-sm">Personalize sua experiência no Lumina.</p>
+        <p className="text-subtle text-sm">Personalize sua experiência no Shalom.</p>
       </div>
 
       {/* Profile Section */}
@@ -175,7 +175,7 @@ const Settings: React.FC = () => {
       </div>
 
       <div className="text-center text-stone-400 text-xs py-4">
-         Lumina App v1.0 • Feito com fé
+         Shalom App v1.0 • Feito com fé
       </div>
     </div>
   );

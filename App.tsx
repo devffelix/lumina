@@ -6,6 +6,7 @@ import Landing from './pages/Landing';
 import Bible from './pages/Bible';
 import Worship from './pages/Worship';
 import Challenges from './pages/Challenges';
+import Illustrations from './pages/Illustrations';
 import Settings from './pages/Settings';
 import { UserProgress } from './types';
 import { AudioProvider } from './contexts/AudioContext';
@@ -51,6 +52,7 @@ const App: React.FC = () => {
             <Route path="/bible" element={<Bible />} />
             <Route path="/worship" element={<Worship />} />
             <Route path="/challenges" element={<Challenges />} />
+            <Route path="/illustrations" element={<Illustrations />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </Layout>
