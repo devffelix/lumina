@@ -1,4 +1,3 @@
-import { GoogleGenAI, Type } from "@google/genai";
 import { BibleApiResponse, Mood, SongSuggestion, ChallengeDayContent } from '../types';
 import { ANXIETY_DETOX_DAYS, GRATITUDE_JOURNEY_DAYS, PROVERBS_JOURNEY_DAYS, HEALING_JOURNEY_DAYS, OPEN_DOORS_JOURNEY_DAYS, RESTORATION_JOURNEY_DAYS, IMPOSSIBLE_CAUSES_JOURNEY_DAYS, ANXIOUS_PRAYERS, TIRED_PRAYERS, HAPPY_PRAYERS } from '../constants';
 
@@ -57,12 +56,6 @@ export const fetchVerse = async (reference: string): Promise<BibleApiResponse> =
   }
 };
 
-// Gemini Service
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-
-// Text Model (Flash)
-const textModelId = 'gemini-2.5-flash';
-
 export const generatePrayer = async (mood: Mood): Promise<string> => {
   // Check for mocked prayers for Anxious mood
   if (mood === Mood.Anxious) {
@@ -85,29 +78,14 @@ export const generatePrayer = async (mood: Mood): Promise<string> => {
     return HAPPY_PRAYERS[randomIndex];
   }
 
-  try {
-    const response = await ai.models.generateContent({
-      model: textModelId,
-      contents: `Escreva uma oração curta, acolhedora e espiritualmente profunda (máximo 100 palavras) para alguém que está se sentindo ${mood}. Inclua uma referência bíblica de conforto no final (apenas a referência, ex: João 14:27). Use português do Brasil.`,
-    });
-    return response.text || "Senhor, dai-nos paz neste momento. Amém.";
-  } catch (error) {
-    console.error("Gemini Error:", error);
-    return "Senhor, acalma meu coração e guia meus passos. (Erro ao gerar oração personalizada)";
-  }
+  // Fallback for other moods without AI
+  await wait(800);
+  return `Senhor, neste momento de ${mood.toLowerCase()}, peço a Tua paz que excede todo o entendimento. Guarda o meu coração e os meus pensamentos em Cristo Jesus. Amém. (Filipenses 4:7)`;
 };
 
 export const generateReflection = async (topic: string): Promise<string> => {
-  try {
-    const response = await ai.models.generateContent({
-      model: textModelId,
-      contents: `Escreva um devocional curto (2 parágrafos) sobre: ${topic}. Seja encorajador e prático. Use português do Brasil.`,
-    });
-    return response.text || "Reflexão indisponível no momento.";
-  } catch (error) {
-    console.error("Gemini Error:", error);
-    return "Reflexão indisponível no momento.";
-  }
+  await wait(500);
+  return "Reflexão indisponível no momento. Conecte-se para mais conteúdos.";
 };
 
 // LISTA ÚNICA DE LOUVORES (MP3)
@@ -205,36 +183,11 @@ export const generateDailyChallengeContent = async (theme: string, day: number):
     if (IMPOSSIBLE_CAUSES_JOURNEY_DAYS[day]) return IMPOSSIBLE_CAUSES_JOURNEY_DAYS[day];
   }
 
-  // Fallback to AI for other themes
-  try {
-    const response = await ai.models.generateContent({
-      model: textModelId,
-      contents: `Crie um conteúdo para o dia ${day} de um desafio espiritual sobre "${theme}".
-      Retorne JSON com:
-      - verse: Um versículo chave.
-      - thought: Um pensamento curto (1 frase).
-      - action: Uma pequena ação prática para o dia.
-      - reflection: Uma reflexão profunda (2-3 parágrafos) explicando o versículo e aplicando ao tema.`,
-      config: {
-        responseMimeType: "application/json",
-         responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            verse: { type: Type.STRING },
-            thought: { type: Type.STRING },
-            action: { type: Type.STRING },
-            reflection: { type: Type.STRING }
-          }
-        }
-      }
-    });
-    return JSON.parse(response.text || '{}');
-  } catch (error) {
-    return {
-      verse: "Salmos 23:1",
-      thought: "O Senhor é o meu pastor.",
-      action: "Tire 5 minutos para agradecer.",
-      reflection: "Reflexão indisponível no momento."
-    };
-  }
+  // Fallback without AI
+  return {
+    verse: "Salmos 23:1",
+    thought: "O Senhor é o meu pastor.",
+    action: "Tire 5 minutos para agradecer.",
+    reflection: "Conteúdo completo indisponível."
+  };
 }
