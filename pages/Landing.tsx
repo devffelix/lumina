@@ -1,13 +1,16 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Music, Zap, Sparkles, Star, ChevronRight, Shield, Heart, Mail, X, Loader2, ArrowRight, Check, CreditCard, HelpCircle, Lock, MessageCircle, Home, Battery, Sun, Share2, Book, Palette, MessageSquare, Bell, WifiOff, AlertTriangle, Coffee, Headphones, Smartphone, TrendingUp, XCircle, AlertOctagon, CheckCircle2, ChevronDown, ChevronUp, Gift, AlertCircle, Baby, HeartHandshake, ArrowDown, Download, Cloud, Moon } from 'lucide-react';
+import { BookOpen, Music, Zap, Sparkles, Star, ChevronRight, Shield, Heart, Mail, X, Loader2, ArrowRight, Check, CreditCard, HelpCircle, Lock, MessageCircle, Home, Battery, Sun, Share2, Book, Palette, MessageSquare, Bell, WifiOff, AlertTriangle, Coffee, Headphones, Smartphone, TrendingUp, XCircle, AlertOctagon, CheckCircle2, ChevronDown, ChevronUp, Gift, AlertCircle, Baby, HeartHandshake, ArrowDown, Download, Cloud, Moon, Info } from 'lucide-react';
 import { ShalomLogo } from '../components/Layout';
+import { checkSubscription } from '../services/supabase';
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState(''); // Estado para mensagem de erro
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('yearly');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
@@ -17,25 +20,47 @@ const Landing: React.FC = () => {
       navigate('/app');
     } else {
       setShowEmailModal(true);
+      setLoginError('');
     }
   };
 
-  const handleSaveEmail = (e: React.FormEvent) => {
+  const handleSaveEmail = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError('');
+
     if (!email.trim() || !email.includes('@')) {
-      alert("Por favor, insira um e-mail válido.");
+      setLoginError("Por favor, insira um e-mail válido.");
       return;
     }
 
     setIsLoading(true);
     
-    // Simulate a small delay for premium feel
-    setTimeout(() => {
-      localStorage.setItem('lumina_email', email);
-      setIsLoading(false);
-      setShowEmailModal(false);
-      navigate('/app');
-    }, 800);
+    try {
+        // Verifica no Supabase
+        const hasActiveSubscription = await checkSubscription(email.trim().toLowerCase());
+
+        if (hasActiveSubscription) {
+            // Sucesso: Salva e entra
+            localStorage.setItem('lumina_email', email);
+            setShowEmailModal(false);
+            navigate('/app');
+        } else {
+            // Falha: Não encontrado
+            setLoginError("Assinatura não encontrada para este e-mail.");
+            
+            // Opcional: Redirecionar visualmente para a área de planos após um pequeno delay
+            setTimeout(() => {
+                setShowEmailModal(false);
+                const el = document.getElementById('pricing');
+                el?.scrollIntoView({ behavior: 'smooth' });
+                alert("E-mail não encontrado na base de assinantes. Por favor, escolha um plano para começar.");
+            }, 1500);
+        }
+    } catch (error) {
+        setLoginError("Erro de conexão. Tente novamente.");
+    } finally {
+        setIsLoading(false);
+    }
   };
 
   const features = [
@@ -845,11 +870,19 @@ const Landing: React.FC = () => {
                     {/* 4. The Big Button */}
                     <div className="mt-8">
                         <button 
-                            onClick={handleStart}
+                            onClick={() => {
+                                const link = selectedPlan === 'yearly' 
+                                    ? 'https://pay.cakto.com.br/4f62xu5' 
+                                    : 'https://pay.cakto.com.br/37whf2r_678375';
+                                window.location.href = link;
+                            }}
                             className="group relative w-full py-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl font-black text-lg md:text-2xl shadow-[0_10px_40px_-10px_rgba(16,185,129,0.5)] hover:shadow-green-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex flex-col items-center justify-center gap-1 overflow-hidden border-b-4 border-green-700"
                         >
                             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                            <span className="flex items-center gap-2 relative z-10">QUERO MEU ACESSO ANUAL <ChevronRight strokeWidth={4} size={24}/></span>
+                            <span className="flex items-center gap-2 relative z-10">
+                                {selectedPlan === 'yearly' ? 'QUERO MEU ACESSO ANUAL' : 'QUERO MEU ACESSO MENSAL'} 
+                                <ChevronRight strokeWidth={4} size={24}/>
+                            </span>
                             <span className="text-xs font-medium opacity-90 tracking-wider font-sans uppercase relative z-10">Acesso Imediato ao App e ao WhatsApp</span>
                         </button>
                     </div>
@@ -1036,10 +1069,17 @@ const Landing: React.FC = () => {
                   />
                 </div>
                 
+                {/* Error Message Display */}
+                {loginError && (
+                    <div className="text-red-500 text-xs font-bold animate-pulse flex items-center justify-center gap-1">
+                        <AlertCircle size={12} /> {loginError}
+                    </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 bg-ink dark:bg-white text-white dark:text-ink rounded-2xl font-bold text-lg shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-ink dark:bg-white text-white dark:text-ink rounded-2xl font-bold text-lg shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <Loader2 className="animate-spin" />
