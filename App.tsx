@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
@@ -8,6 +9,7 @@ import Worship from './pages/Worship';
 import Challenges from './pages/Challenges';
 import Illustrations from './pages/Illustrations';
 import Settings from './pages/Settings';
+import Trails from './pages/Trails';
 import { UserProgress } from './types';
 import { AudioProvider } from './contexts/AudioContext';
 
@@ -16,6 +18,10 @@ const INITIAL_PROGRESS: UserProgress = {
   lastRead: null,
   streak: 0,
   lastLoginDate: null,
+  xp: 0,
+  dailyReadCount: 0,
+  todayStudyMinutes: 0,
+  earnedBadges: []
 };
 
 const App: React.FC = () => {
@@ -27,8 +33,44 @@ const App: React.FC = () => {
     } else {
       const parsed = JSON.parse(saved);
       const today = new Date().toISOString().split('T')[0];
+      
+      // Migration & Daily Reset Logic
+      let updated = { ...parsed };
+      let changed = false;
+
+      // Reset Daily Counts if it's a new day
       if (parsed.lastLoginDate !== today) {
-        const updated = { ...parsed, lastLoginDate: today };
+        updated.lastLoginDate = today;
+        updated.dailyReadCount = 0; // Reset daily goal
+        updated.todayStudyMinutes = 0; // Reset study time
+        changed = true;
+      }
+      
+      // Ensure XP field exists
+      if (typeof parsed.xp === 'undefined') {
+        updated.xp = 0;
+        changed = true;
+      }
+
+      // Ensure Daily Count field exists
+      if (typeof parsed.dailyReadCount === 'undefined') {
+        updated.dailyReadCount = 0;
+        changed = true;
+      }
+      
+      // Ensure Study Minutes field exists
+      if (typeof parsed.todayStudyMinutes === 'undefined') {
+        updated.todayStudyMinutes = 0;
+        changed = true;
+      }
+
+      // Ensure Earned Badges field exists (New Migration)
+      if (typeof parsed.earnedBadges === 'undefined') {
+        updated.earnedBadges = [];
+        changed = true;
+      }
+
+      if (changed) {
         localStorage.setItem('lumina_progress', JSON.stringify(updated));
       }
     }
@@ -54,6 +96,7 @@ const App: React.FC = () => {
             <Route path="/challenges" element={<Challenges />} />
             <Route path="/illustrations" element={<Illustrations />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/trails" element={<Trails />} />
           </Routes>
         </Layout>
       </Router>

@@ -1,5 +1,4 @@
 
-
 export interface BibleBook {
   name: string;
   englishName: string; // Used for API calls
@@ -18,6 +17,35 @@ export interface UserProgress {
   lastRead: string | null;
   streak: number;
   lastLoginDate: string | null;
+  xp: number; // New field for Gamification
+  dailyReadCount: number; // Field for Daily Goal Meter
+  todayStudyMinutes: number; // Actual minutes studied today
+  earnedBadges: string[]; // List of Badge IDs
+}
+
+export interface UserGoals {
+  dailyChapters: number;
+  dailyStudyMinutes: number;
+  focusVirtue: string; // ID of the virtue
+  targetJourneyId: string | null;
+}
+
+export interface Virtue {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  colorFrom: string;
+  colorTo: string;
+}
+
+export interface Badge {
+  id: string;
+  title: string;
+  description: string;
+  icon: string; // Lucide icon name or emoji
+  type: 'journey' | 'bible' | 'special';
+  unlockedAt?: string;
 }
 
 export enum Mood {
@@ -89,4 +117,12 @@ export interface AudioContextType {
   seek: (time: number) => void;
   setVolume: (level: number) => void; // level 0 to 1
   closePlayer: () => void;
+}
+
+export interface LevelData {
+  currentLevel: number;
+  currentTitle: string;
+  nextLevelXp: number;
+  currentLevelBaseXp: number;
+  progressPercent: number;
 }

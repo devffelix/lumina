@@ -1,4 +1,135 @@
-import { BibleBook, Challenge, ChallengeDayContent } from './types';
+
+
+import { BibleBook, Challenge, ChallengeDayContent, Badge, Virtue, UserGoals } from './types';
+
+// Gamification Constants
+export const XP_PER_CHAPTER = 50;
+export const XP_PER_CHALLENGE_DAY = 100;
+export const XP_PER_BADGE = 500; // Bonus XP for earning a generic badge
+export const XP_REWARD_JOURNEY = 200; // Specific reward for claiming a journey
+
+export const INITIAL_GOALS: UserGoals = {
+  dailyChapters: 3,
+  dailyStudyMinutes: 15,
+  focusVirtue: 'hope',
+  targetJourneyId: null
+};
+
+export const VIRTUES: Virtue[] = [
+  {
+    id: 'hope',
+    name: 'Esperança',
+    description: 'Confiança inabalável no futuro de Deus.',
+    icon: 'Anchor',
+    colorFrom: 'from-blue-400',
+    colorTo: 'to-cyan-300'
+  },
+  {
+    id: 'charity',
+    name: 'Caridade',
+    description: 'Amor em ação ao próximo.',
+    icon: 'HeartHandshake',
+    colorFrom: 'from-rose-400',
+    colorTo: 'to-pink-300'
+  },
+  {
+    id: 'faith',
+    name: 'Fé',
+    description: 'Certeza das coisas que não se veem.',
+    icon: 'Shield',
+    colorFrom: 'from-gold',
+    colorTo: 'to-orange'
+  },
+  {
+    id: 'patience',
+    name: 'Paciência',
+    description: 'Paz durante a espera.',
+    icon: 'Hourglass',
+    colorFrom: 'from-emerald-400',
+    colorTo: 'to-green-300'
+  },
+  {
+    id: 'wisdom',
+    name: 'Sabedoria',
+    description: 'Discernimento para escolhas divinas.',
+    icon: 'Brain',
+    colorFrom: 'from-purple-400',
+    colorTo: 'to-indigo-300'
+  },
+  {
+    id: 'courage',
+    name: 'Coragem',
+    description: 'Força para agir apesar do medo.',
+    icon: 'Sword',
+    colorFrom: 'from-red-500',
+    colorTo: 'to-orange-400'
+  }
+];
+
+export const USER_LEVELS = [
+  { level: 1, xp: 0, title: "Peregrino da Fé" },
+  { level: 2, xp: 100, title: "Discípulo Iniciante" },
+  { level: 3, xp: 300, title: "Servo Dedicado" },
+  { level: 4, xp: 600, title: "Guerreiro de Oração" },
+  { level: 5, xp: 1000, title: "Semeador da Verdade" },
+  { level: 6, xp: 1500, title: "Mestre da Palavra" },
+  { level: 7, xp: 2200, title: "Guardião do Templo" },
+  { level: 8, xp: 3000, title: "Profeta do Reino" },
+  { level: 9, xp: 4000, title: "Apóstolo da Paz" },
+  { level: 10, xp: 5500, title: "Embaixador do Céu" }
+];
+
+export const STATIC_BADGES: Badge[] = [
+  {
+    id: 'badge_anxiety',
+    title: 'Mente de Paz',
+    description: 'Completou o Detox de Ansiedade.',
+    icon: 'Brain',
+    type: 'journey'
+  },
+  {
+    id: 'badge_gratitude',
+    title: 'Coração Grato',
+    description: 'Completou a Jornada da Gratidão.',
+    icon: 'Heart',
+    type: 'journey'
+  },
+  {
+    id: 'badge_proverbs',
+    title: 'Sábio',
+    description: 'Completou a Sabedoria de Provérbios.',
+    icon: 'Scroll',
+    type: 'journey'
+  },
+  {
+    id: 'badge_healing',
+    title: 'Fé Curadora',
+    description: 'Completou a Jornada de Cura.',
+    icon: 'Cross',
+    type: 'journey'
+  },
+  {
+    id: 'badge_doors',
+    title: 'Portas Abertas',
+    description: 'Completou a Jornada de Provisão.',
+    icon: 'Key',
+    type: 'journey'
+  },
+  {
+    id: 'badge_restoration',
+    title: 'Restaurador',
+    description: 'Completou a Jornada de Restauração.',
+    icon: 'Users',
+    type: 'journey'
+  },
+  {
+    id: 'badge_impossible',
+    title: 'Movimentador de Montes',
+    description: 'Completou a Jornada de Causas Impossíveis.',
+    icon: 'Mountain',
+    type: 'journey'
+  }
+];
 
 export const BIBLE_BOOKS: BibleBook[] = [
   // Antigo Testamento
@@ -108,7 +239,7 @@ export const HAPPY_PRAYERS = [
   "Senhor, meu coração transborda de alegria hoje! Obrigado por este dia incrível e por cada detalhe da Tua bondade. Que minha felicidade seja um reflexo do Teu amor e contagie todos ao meu redor. Te louvo porque és bom e Tua misericórdia dura para sempre. Amém. (Salmos 118:24)",
   "Pai Amado, te agradeço pelas bênçãos que recebí. Minha alma canta de gratidão! Ajuda-me a não esquecer que toda boa dádiva vem de Ti. Que eu use este momento de alegria para abençoar outros e glorificar o Teu nome. Amém. (Tiago 1:17)",
   "Deus de maravilhas, 'grandes coisas fez o Senhor por nós, por isso estamos alegres'. Celebro a Tua fidelidade e o Teu favor sobre minha vida. Que este sorriso no meu rosto seja um testemunho da Tua graça. Guardo este momento no coração como um tesouro. Amém. (Salmos 126:3)",
-  "Senhor Jesus, obrigado porque a alegria do Senhor é a minha força! Mesmo nos dias bons, Tu és a minha maior fonte de prazer. Que eu possa desfrutar deste momento com sabedoria e um coração grato, reconhecendo a Tua mão em tudo. Amém. (Neemias 8:10)",
+  "Senhor Jesus, obrigado porque a alegria do Senhor é a minha força! Mesmo nos dias bons, Tu és a minha maior fonte de prazer. Que eu use este momento com sabedoria e um coração grato, reconhecendo a Tua mão em tudo. Amém. (Neemias 8:10)",
   "Pai, hoje quero apenas dizer: OBRIGADO! Minha boca se enche de riso e minha língua de júbilo. Como é bom pertencer a Ti e viver sob o Teu cuidado. Recebe o meu louvor como oferta de gratidão neste dia feliz. Amém. (Salmos 100:4-5)",
   "Senhor, que a alegria que sinto hoje não seja passageira, mas enraizada na certeza da Tua salvação. 'Alegrai-vos sempre no Senhor'. Que meu espírito permaneça leve e grato, espalhando a luz de Cristo por onde eu passar. Amém. (Filipenses 4:4)"
 ];
@@ -159,605 +290,597 @@ export const ANXIETY_DETOX_DAYS: Record<number, ChallengeDayContent> = {
   }
 };
 
-// Static Content for Deep Gratitude Journey
 export const GRATITUDE_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
-  1: { 
-    verse: "Este é o dia que o Senhor fez... - Salmos 118:24", 
-    thought: "Cada amanhecer é um presente exclusivo de Deus.", 
-    action: "Diga em voz alta: 'Obrigado Deus por mais um dia'.", 
-    reflection: "Frequentemente acordamos já focados nos problemas que o dia trará, mas o salmista nos convida a mudar a lente: este dia foi desenhado e arquitetado por Deus. A verdadeira alegria não é um sentimento espontâneo provocado apenas por boas notícias, mas uma postura de fé que decide celebrar o dom da vida antes mesmo de sair da cama." 
-  },
-  2: { 
-    verse: "Deem graças em todas as circunstâncias... - 1 Ts 5:18", 
-    thought: "A gratidão muda sua reação ao mundo.", 
-    action: "Encontre algo positivo em uma situação ruim que aconteceu recentemente.", 
-    reflection: "Paulo não diz para darmos graças 'pelas' circunstâncias ruins (como a doença ou a perda), mas 'em' todas elas. Isso significa que, mesmo no vale, há motivos para agradecer: a presença de Deus, a promessa da eternidade, o crescimento do caráter. Essa gratidão teimosa protege nossa mente do desespero e abre caminho para ver a solução." 
-  },
-  3: { 
-    verse: "Bendiga o Senhor a minha alma! Não esqueça de nenhuma de suas bênçãos! - Salmos 103:2", 
-    thought: "O esquecimento é inimigo da gratidão.", 
-    action: "Escreva 3 livramentos ou bênçãos que você recebeu no último ano.", 
-    reflection: "Nossa mente tem um viés negativo natural; lembramos facilmente das ofensas e dores, mas esquecemos rapidamente dos milagres passados. O salmista prega para sua própria alma, ordenando que ela se lembre. A gratidão requer memória ativa. Olhar para trás e ver a fidelidade de Deus nos dá combustível para confiar nEle hoje." 
-  },
-  4: { 
-    verse: "Toda boa dádiva e todo dom perfeito vêm do alto... - Tiago 1:17", 
-    thought: "Tudo o que você tem de bom é um empréstimo do céu.", 
-    action: "Agradeça especificamente por um talento ou habilidade que você tem.", 
-    reflection: "O orgulho mata a gratidão porque nos faz acreditar que conquistamos tudo sozinhos. A verdade bíblica é que nossa inteligência, saúde e oportunidades são presentes do Pai das Luzes. Reconhecer a fonte divina de nossas virtudes nos mantém humildes e profundamente gratos, transformando nossa vida em uma oferta de volta para Ele." 
-  },
-  5: { 
-    verse: "Os céus declaram a glória de Deus... - Salmos 19:1", 
-    thought: "A criação é uma carta de amor do Criador.", 
-    action: "Observe a natureza por 5 minutos hoje (o céu, uma planta, um animal).", 
-    reflection: "Vivemos tão ocupados que ignoramos a beleza gratuita que nos cerca. A natureza é a 'revelação geral' de Deus, mostrando Seu poder e criatividade. Parar para admirar um pôr do sol ou a complexidade de uma flor é um ato de adoração que recalibra nossa escala de problemas diante da grandeza do Criador." 
-  },
-  6: { 
-    verse: "Dou graças ao meu Deus toda vez que me lembro de vocês. - Fp 1:3", 
-    thought: "Pessoas são presentes, mesmo as difíceis.", 
-    action: "Envie uma mensagem de gratidão a um amigo ou mentor.", 
-    reflection: "Nossos relacionamentos são os maiores canais da graça de Deus. Muitas vezes só valorizamos as pessoas quando as perdemos. A gratidão expressa fortalece vínculos e cura feridas. Hoje, seja intencional em dizer a alguém o quanto a vida dessa pessoa abençoa a sua. Não assuma que elas já sabem." 
-  },
-  7: { 
-    verse: "Entrem por suas portas com ações de graças e em seus átrios com louvor. - Salmos 100:4", 
-    thought: "A gratidão é a senha de acesso para a presença de Deus.", 
-    action: "Cante um louvor de agradecimento antes de pedir qualquer coisa.", 
-    reflection: "Imagine chegar à casa de alguém apenas pedindo favores sem nem cumprimentar. A gratidão é o protocolo do Reino. Ela prepara o ambiente espiritual e alinha nosso coração. Quando começamos a oração agradecendo, nossos problemas diminuem de tamanho e a grandeza de Deus ocupa o centro da nossa visão." 
-  },
-  8: { 
-    verse: "Graças a Deus pelo seu dom indescritível! - 2 Co 9:15", 
-    thought: "Jesus é o maior presente que já recebemos.", 
-    action: "Tire um momento para agradecer pela Cruz e pela Salvação.", 
-    reflection: "Se Deus nunca mais nos desse nada além de Jesus, já teríamos motivo para gratidão eterna. O evangelho é o 'dom indescritível' — não há palavras suficientes para agradecer o fato de que fomos amados quando ainda éramos inimigos. Essa gratidão fundamental deve ser o alicerce de todos os nossos dias." 
-  },
-  9: { 
-    verse: "E a paz de Deus... guardará os seus corações... - Fp 4:7", 
-    thought: "A gratidão gera paz interior.", 
-    action: "Quando sentir ansiedade hoje, pare e agradeça por 3 coisas imediatamente.", 
-    reflection: "Existe uma conexão direta entre gratidão e paz mental. A ansiedade foca no que falta ou no que pode dar errado; a gratidão foca no que há e no que Deus já fez certo. Elas não podem ocupar o mesmo espaço na mente. Expulse a preocupação preenchendo o espaço com ações de graças." 
-  },
-  10: { 
-    verse: "Sejam agradecidos. - Cl 3:15", 
-    thought: "A gratidão é um imperativo, não uma sugestão.", 
-    action: "Ore por alguém que te magoou, agradecendo por Deus estar te ensinando a perdoar.", 
-    reflection: "Neste contexto, Paulo está falando sobre a paz de Cristo e a convivência no corpo. A ingratidão nos torna amargos e críticos. Um coração grato, por outro lado, é mais propenso a perdoar e relevar ofensas, pois reconhece o quanto já foi perdoado por Deus. A gratidão lubrifica as engrenagens dos relacionamentos humanos." 
-  },
-  11: { verse: "O Senhor é a minha força e o meu escudo... - Salmos 28:7", thought: "Deus protege quem confia.", action: "Agradeça pelos perigos que você nem viu, mas Deus te livrou.", reflection: "Muitas vezes agradecemos apenas pelos livramentos óbvios, mas Deus nos protege de inúmeros perigos invisíveis diariamente. Ele é o escudo que nos cerca por todos os lados. A confiança nEle transforma o medo em cânticos de louvor." },
-  12: { verse: "Tendo sustento... estejamos contentes. - 1 Tm 6:8", thought: "Contentamento é a verdadeira riqueza.", action: "Olhe para o que você tem em casa e agradeça pela provisão básica.", reflection: "A sociedade de consumo nos treina para a insatisfação crônica. O contentamento bíblico não é acomodação, mas a capacidade de encontrar alegria e suficiência em Deus e no que Ele já proveu, libertando-nos da ganância e da inveja." },
-  13: { verse: "Tudo coopera para o bem... - Rm 8:28", thought: "Deus usa até o mal para o bem.", action: "Agradeça por uma lição difícil que você aprendeu no passado.", reflection: "Esta é uma das promessas mais desafiadoras. Agradecer não significa dizer que o sofrimento foi bom, mas reconhecer que Deus é grande o suficiente para reciclar nossas dores e transformá-las em propósito e crescimento. Nada é desperdiçado nas mãos dEle." },
-  14: { verse: "O seu amor dura para sempre! - Salmos 136:1", thought: "O amor de Deus é a única constante no universo.", action: "Repita durante o dia: 'Deus é bom e Seu amor é eterno'.", reflection: "Circunstâncias mudam, pessoas falham, a economia oscila. Mas o amor leal de Deus (Hesed) é inabalável. Basear nossa gratidão nesse caráter imutável de Deus nos dá estabilidade emocional mesmo nos dias mais turbulentos." },
-  15: { verse: "Recebido com ação de graças... - 1 Tm 4:4", thought: "A gratidão santifica o prazer e a provisão.", action: "Ore antes de comer hoje, não por hábito, mas com fervor real.", reflection: "Quando recebemos algo com gratidão, reconhecemos Deus como a fonte. Isso transforma uma refeição comum em um ato sagrado de adoração. A gratidão impede que nos tornemos idólatras das coisas criadas, mantendo nosso foco no Criador." },
-  16: { verse: "Eu te louvo porque me fizeste de modo especial... - Salmos 139:14", thought: "Você é uma obra-prima intencional.", action: "Agradeça por uma característica física ou de personalidade sua.", reflection: "Muitos sofrem com a autoimagem, o que é uma forma de ingratidão contra o Artista que nos criou. Aceitar e agradecer por quem somos é um passo de cura. Deus não comete erros; Ele te desenhou com propósito. Celebre a criação que você é." },
-  17: { verse: "O Senhor fez grandes coisas por nós... - Salmos 126:3", thought: "Celebre as vitórias, grandes e pequenas.", action: "Conte um testemunho de vitória para alguém hoje.", reflection: "Testemunhar é uma forma poderosa de gratidão pública. Quando compartilhamos o que Deus fez, nossa fé é selada e a fé de quem ouve é edificada. Não guarde os feitos de Deus em segredo; a gratidão deve ser barulhenta." },
-  18: { verse: "Cantando a Deus com gratidão... - Cl 3:16", thought: "A música é um veículo para a gratidão.", action: "Ouça e cante sua música de louvor favorita.", reflection: "A música tem o poder de acessar emoções que a fala não alcança. Paulo nos instrui a usar salmos e hinos para ensinar e aconselhar uns aos outros, mas a base disso é a gratidão no coração. Deixe que a melodia leve sua gratidão ao trono." },
-  19: { verse: "Melhor é o pouco com o temor do Senhor... - Pv 15:16", thought: "Paz vale mais que ouro.", action: "Agradeça pela tranquilidade e pelos momentos simples.", reflection: "Muitos buscam acumular bens e perdem a paz no processo. A sabedoria bíblica inverte essa lógica: a verdadeira prosperidade inclui a paz de espírito e a presença de Deus. Um jantar simples com amor vale mais que um banquete com discórdia." },
-  20: { verse: "Todavia eu me alegrarei no Senhor. - Hc 3:18", thought: "Gratidão incondicional é uma arma de guerra.", action: "Louve a Deus apesar de qualquer problema pendente.", reflection: "O profeta Habacuque descreve um cenário de devastação econômica total, mas decide se alegrar no Deus da sua salvação. Essa é a forma mais madura de gratidão: aquela que não depende da figueira florescer, mas se sustenta na fidelidade de Deus." },
-  21: { verse: "Como posso retribuir ao Senhor? - Salmos 116:12", thought: "A gratidão gera generosidade e serviço.", action: "Faça um ato de bondade não solicitado para alguém.", reflection: "Quando percebemos o quanto recebemos de Deus, a resposta natural é querer dar de volta. Embora não possamos 'pagar' a Deus, podemos servir aos Seus filhos. O serviço ao próximo é a gratidão em movimento." },
-  22: { verse: "Tornem conhecidos os seus feitos. - 1 Cr 16:8", thought: "Gratidão é uma forma de evangelismo.", action: "Poste algo pelo qual você é grato nas redes sociais.", reflection: "Em um mundo cheio de más notícias e reclamações, um coração grato brilha como luz. Ao dar crédito a Deus publicamente pelas coisas boas da vida, despertamos a curiosidade dos outros sobre a fonte da nossa esperança." },
-  23: { verse: "O coração alegre é bom remédio. - Pv 17:22", thought: "Gratidão traz saúde física e emocional.", action: "Sorria intencionalmente e procure motivos para rir.", reflection: "A ciência moderna confirma o que a Bíblia diz há milênios: a alegria e a gratidão fortalecem o sistema imunológico e reduzem o estresse. Reclamar adoece a alma e o corpo; agradecer é um tônico de vida." },
-  24: { verse: "Recebendo um Reino inabalável... - Hb 12:28", thought: "Seu futuro eterno é seguro.", action: "Agradeça pela promessa do Céu e da vida eterna.", reflection: "Tudo neste mundo pode ser abalado — saúde, economia, política. Mas nós pertencemos a um Reino que não pode ser destruído. Essa segurança eterna deve gerar em nós uma gratidão profunda e reverente, independente do caos terreno." },
-  25: { verse: "O Senhor é compassivo... - Salmos 103:8", thought: "Deus é paciente com nossas falhas.", action: "Agradeça por Deus não ter desistido de você.", reflection: "Quantas vezes falhamos? A paciência de Deus é um motivo imenso para gratidão. Ele não nos trata conforme os nossos pecados, mas segundo a Sua misericórdia. Reconhecer essa graça nos torna mais pacientes com os outros também." },
-  26: { verse: "Ações de graças por todos os homens... - 1 Tm 2:1", thought: "Seja grato pela comunidade e pela nação.", action: "Ore agradecendo pela vida de líderes ou autoridades.", reflection: "É fácil criticar, mas a Bíblia nos orienta a orar e agradecer. A intercessão com gratidão muda nossa atitude em relação à sociedade e convida a intervenção de Deus para que tenhamos uma vida tranquila e piedosa." },
-  27: { verse: "Mudaste o meu choro em dança. - Salmos 30:11", thought: "Deus é especialista em restauração.", action: "Coloque uma música animada e celebre a vida.", reflection: "O luto e a tristeza têm seu tempo, mas não são o destino final. Deus tem o poder de transmutar as lágrimas mais amargas em alegria festiva. A gratidão antecipa essa virada, crendo que a manhã da alegria virá." },
-  28: { verse: "Graças a Deus, que nos dá a vitória... - 1 Co 15:57", thought: "Já somos vencedores em Cristo.", action: "Agradeça por uma batalha que você sabe que vai vencer.", reflection: "Não lutamos *para* a vitória, mas *a partir* da vitória conquistada por Jesus na cruz e na ressurreição. A gratidão nos posiciona como vencedores, lembrando-nos que o inimigo final, a morte, já foi derrotado." },
-  29: { verse: "Nunca vi desamparado o justo. - Salmos 37:25", thought: "A fidelidade de Deus atravessa gerações.", action: "Agradeça pela provisão que te sustentou até aqui.", reflection: "Olhe para a sua história de vida. Houve momentos difíceis, sim, mas aqui está você. Deus não te deixou. Essa constatação da fidelidade passada de Deus é a garantia de que Ele continuará cuidando do seu futuro." },
-  30: { verse: "Todo ser que respira louve ao Senhor. - Salmos 150:6", thought: "Seu propósito final é o louvor.", action: "Respire fundo e use esse fôlego para dizer 'Aleluia'.", reflection: "Encerramos a jornada onde tudo começa e termina: no louvor. Enquanto houver fôlego em nossos pulmões, há uma razão para agradecer. A gratidão não é apenas um ato, é o estilo de vida do céu trazido para a terra." }
-};
-
-// Static Content for Proverbs Wisdom Journey
-export const PROVERBS_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
   1: {
-    verse: "O temor do Senhor é o princípio do conhecimento... - Provérbios 1:7",
-    thought: "A sabedoria começa com a reverência a Deus.",
-    action: "Ore pedindo um coração ensinável e reverente.",
-    reflection: "Não existe sabedoria real sem Deus no centro. O 'temor' aqui não é pavor, mas um respeito profundo e admirado que reconhece Deus como a autoridade suprema. Sem essa bússola moral e espiritual, todo conhecimento humano pode se tornar arrogância ou ser mal utilizado. Comece sua busca por sabedoria curvando-se diante do Criador."
+    verse: "Então o Senhor Deus formou o homem do pó da terra e soprou em suas narinas o fôlego de vida... - Gênesis 2:7",
+    thought: "O primeiro motivo de gratidão é o ar que você respira agora.",
+    action: "Pare por 1 minuto. Respire fundo. Agradeça apenas pelo fôlego de vida.",
+    reflection: "Muitas vezes buscamos grandes milagres para agradecer, esquecendo do milagre contínuo que ocorre em nossos pulmões a cada segundo. O 'fôlego de vida' (Ruach) é um presente direto de Deus, um empréstimo diário da Sua própria vitalidade. Gratidão começa no básico: estou vivo. Se há fôlego, há propósito. Agradecer pela vida é reconhecer que sua existência não é um acidente, mas um projeto intencional do Criador."
   },
   2: {
-    verse: "Pois o Senhor é quem dá sabedoria... - Provérbios 2:6",
-    thought: "Sabedoria é um presente, não uma conquista apenas intelectual.",
-    action: "Leia Provérbios 2 e peça discernimento específico para um problema.",
-    reflection: "Muitas vezes buscamos sabedoria em livros, cursos e gurus, mas a fonte primária é Deus. Ele tem prazer em dar discernimento a quem pede. A sabedoria divina vai além do Q.I.; é a habilidade de ver a vida sob a perspectiva da eternidade e tomar decisões que trazem vida e paz."
+    verse: "Como é bom e agradável quando os irmãos convivem em união! - Salmos 133:1",
+    thought: "Pessoas são presentes. Quem tem caminhado com você?",
+    action: "Envie uma mensagem para alguém importante dizendo: 'Sou grato por você existir'.",
+    reflection: "A gratidão horizontal (pelas pessoas) fortalece a gratidão vertical (a Deus). Ninguém chega a lugar nenhum sozinho. Deus usa pessoas como canais de sua graça, amor e correção. Hoje, reflita sobre as amizades, familiares ou mentores que, mesmo imperfeitos, tornam sua jornada mais leve. A união não é ausência de diferenças, mas a decisão de caminhar junto apesar delas. Isso é um presente divino."
   },
   3: {
-    verse: "Confie no Senhor de todo o seu coração... - Provérbios 3:5",
-    thought: "Sua lógica é limitada; a visão de Deus é infinita.",
-    action: "Entregue uma decisão difícil a Deus hoje, renunciando à necessidade de entender tudo.",
-    reflection: "Nossa tendência natural é confiar no que vemos e no que entendemos. A fé é confiar na Mão que nos guia no escuro. Deus vê o quadro completo, enquanto nós vemos apenas um pixel. Confiar de 'todo o coração' significa não se apoiar apenas na própria inteligência, mas buscar a direção de Deus antes de cada passo."
+    verse: "Os céus declaram a glória de Deus; o firmamento proclama a obra das suas mãos. - Salmos 19:1",
+    thought: "A criação é uma carta de amor aberta diante dos seus olhos.",
+    action: "Saia ou olhe pela janela. Encontre algo na natureza (uma árvore, o céu, um pássaro) e agradeça pela beleza.",
+    reflection: "A natureza é o 'primeiro livro' de Deus. Ela prega sem palavras sobre a criatividade, poder e ordem do Senhor. Quando admiramos a beleza de um pôr do sol ou a complexidade de uma flor, estamos adorando o Artista por trás da obra. A gratidão pela criação nos reconecta com nossa pequenez e com a grandeza de Deus, tirando o foco dos nossos problemas imediatos e ampliando nossa perspectiva."
   },
   4: {
-    verse: "Acima de tudo, guarde o seu coração, pois dele depende toda a sua vida. - Provérbios 4:23",
-    thought: "O que entra na sua mente define sua vida.",
-    action: "Faça um 'jejum' de conteúdos negativos hoje (notícias ruins, fofoca).",
-    reflection: "O coração, na Bíblia, é o centro das emoções, intelecto e vontade. É a fonte. Se a água da fonte estiver envenenada, todo o rio da vida será poluído. Proteger o coração significa filtrar o que assistimos, ouvimos e pensamos. Não deixe o lixo do mundo fazer ninho na sua alma."
+    verse: "Porque aos seus anjos dará ordem a teu respeito, para te guardarem em todos os teus caminhos. - Salmos 91:11",
+    thought: "Você não vê, mas há livramentos acontecendo o tempo todo.",
+    action: "Agradeça por 3 livramentos que você já viveu no passado.",
+    reflection: "Quantas vezes o carro não bateu por um segundo? Quantas vezes uma porta fechada foi, na verdade, uma proteção contra um caminho destrutivo? A gratidão pela proteção reconhece que não estamos à mercê do acaso. Há uma providência ativa, muitas vezes invisível, trabalhando nos bastidores. Agradecer pelo que 'não aconteceu' de ruim é um exercício poderoso de fé e reconhecimento da soberania de Deus."
   },
   5: {
-    verse: "Os caminhos do homem estão diante dos olhos do Senhor... - Provérbios 5:21",
-    thought: "Integridade é fazer o certo mesmo quando ninguém vê.",
-    action: "Seja honesto em uma pequena coisa hoje, mesmo que custe algo.",
-    reflection: "Deus é a plateia onipresente da nossa vida. Isso não deve nos causar paranoia, mas nos chamar a uma vida de transparência e coerência. A pessoa sábia vive na luz, sem segredos escondidos que possam se tornar armadilhas no futuro. A integridade traz uma segurança inabalável."
+    verse: "Pois vocês são salvos pela graça, por meio da fé... não vem das obras, para que ninguém se orgulhe. - Efésios 2:8-9",
+    thought: "O maior presente você já recebeu e não custou nada a você, mas tudo a Ele.",
+    action: "Escreva uma breve carta a Jesus agradecendo pela Cruz.",
+    reflection: "Se Deus nunca mais fizesse nada por nós além da cruz, já teríamos motivos para agradecer por toda a eternidade. A salvação é o dom supremo. Gratidão profunda nasce quando entendemos a profundidade da nossa dívida e a magnitude do pagamento feito por Cristo. Hoje, tire os olhos das bênçãos materiais e foque na bênção espiritual eterna: seu nome está escrito no Livro da Vida."
   },
   6: {
-    verse: "Vai ter com a formiga, ó preguiçoso... - Provérbios 6:6",
-    thought: "A diligência traz prosperidade; a preguiça, pobreza.",
-    action: "Complete uma tarefa que você está adiando há dias.",
-    reflection: "A sabedoria é iminentemente prática. Salomão usa a formiga como exemplo de autoliderança e iniciativa. Ela não precisa de supervisor para trabalhar. Deus abençoa o movimento, o esforço e a preparação. Não espere as condições perfeitas para agir; a passividade é inimiga do destino."
+    verse: "O meu Deus suprirá todas as necessidades de vocês, de acordo com as suas gloriosas riquezas... - Filipenses 4:19",
+    thought: "Não olhe para a falta, olhe para a Fonte.",
+    action: "Identifique uma necessidade atual e agradeça antecipadamente pela provisão de Deus.",
+    reflection: "A gratidão antecipada é a linguagem da fé. Paulo escreveu isso enquanto estava preso, dependendo de ofertas. Ele não olhava para a escassez da prisão, mas para as 'gloriosas riquezas' de Deus. Agradecer antes de ver a resposta muda nossa postura de 'mendigos desesperados' para 'filhos confiantes'. Deus não é um patrão que paga salário, é um Pai que supre necessidades."
   },
   7: {
-    verse: "Guarde os meus mandamentos e você viverá. - Provérbios 7:2",
-    thought: "A obediência é o caminho da vida e da proteção.",
-    action: "Obedeça prontamente a um impulso do Espírito Santo ou a um princípio bíblico hoje.",
-    reflection: "Os mandamentos de Deus não são restrições para roubar nossa alegria, são 'cercas de proteção' para nos guardar do abismo. Assim como os trilhos permitem que o trem corra velozmente sem descarrilar, a Lei de Deus dá direção e segurança para nossa liberdade. Obedecer é escolher a vida."
+    verse: "Meus irmãos, considerem motivo de grande alegria o fato de passarem por diversas provações. - Tiago 1:2",
+    thought: "Até nos dias difíceis, a gratidão encontra um propósito.",
+    action: "Agradeça por uma dificuldade que te fez crescer ou amadurecer.",
+    reflection: "Este é o nível avançado da gratidão: agradecer na dor. Não agradecemos *pelo* mal, mas *no meio* dele e pelo que Deus produz *através* dele. As provações geram perseverança e maturidade que o conforto nunca produziria. Olhar para trás e ver como uma fase ruim te tornou mais forte te ajuda a enfrentar as lutas de hoje com uma perspectiva de esperança e gratidão pelo processo de Deus."
   },
   8: {
-    verse: "A sabedoria é melhor do que jóias... - Provérbios 8:11",
-    thought: "Invista em sabedoria, ela vale mais que dinheiro.",
-    action: "Leia um capítulo de um livro edificante ou ouça um podcast de ensino.",
-    reflection: "Riquezas materiais podem ser roubadas, perdidas ou desvalorizadas. A sabedoria divina é um tesouro eterno que se integra a quem você é. Ela abre portas que o dinheiro não abre e resolve problemas que o dinheiro não resolve. Busque crescer em entendimento espiritual acima do ganho financeiro."
+    verse: "Deus faz com que o solitário viva em família... - Salmos 68:6",
+    thought: "O lar não é apenas um lugar, é onde o amor habita.",
+    action: "Faça uma refeição especial com sua família ou ligue para um parente querido apenas para dizer 'eu te amo'.",
+    reflection: "A família é a primeira instituição criada por Deus, um laboratório onde aprendemos a amar, perdoar e servir. Mesmo que sua família tenha imperfeições (e todas têm), ela é um instrumento de Deus. A gratidão pelo lar transforma as paredes de uma casa em um santuário. Agradeça hoje por ter um lugar para pertencer, pois Deus cuida da sua solidão através de pessoas."
   },
   9: {
-    verse: "O temor do Senhor prolonga os dias. - Provérbios 10:27",
-    thought: "Uma vida com Deus é uma vida de qualidade e longevidade.",
-    action: "Cuide do seu corpo hoje como templo de Deus (beba água, durma bem).",
-    reflection: "A sabedoria afeta nossa fisiologia. O pecado, a culpa, a raiva e a ansiedade geram estresse que mata. A justiça, a paz e a confiança em Deus trazem saúde aos ossos e serenidade à alma. Viver segundo os princípios do Criador é o melhor manual de manutenção para a criatura."
+    verse: "Dêem graças em todas as circunstâncias, pois esta é a vontade de Deus para vocês em Cristo Jesus. - 1 Tessalonicenses 5:18",
+    thought: "A gratidão não muda o que acontece, muda quem passa pelo acontecimento.",
+    action: "Ao se deparar com algo irritante hoje (trânsito, fila), force um pensamento de gratidão e veja a irritação diminuir.",
+    reflection: "Paulo nos desafia a agradecer 'em' todas as coisas, não necessariamente 'por' todas as coisas. A gratidão é uma lente. Você pode focar na chuva que atrapalhou o passeio ou na chuva que regou a terra. A vontade de Deus é que tenhamos um espírito grato, pois isso blinda nosso coração contra a amargura. Gratidão é uma escolha de alinhamento com a soberania de Deus."
   },
   10: {
-    verse: "Onde não há conselho os projetos fracassam. - Provérbios 15:22",
-    thought: "Não caminhe sozinho. A autossuficiência é perigosa.",
-    action: "Peça um conselho a alguém mais experiente sobre um plano seu.",
-    reflection: "O orgulho nos faz achar que sabemos tudo e que não precisamos de ninguém. A sabedoria reconhece nossas limitações e busca a visão de outros. Ter mentores e conselheiros é uma rede de segurança que evita quedas desnecessárias. O sucesso é um esporte coletivo."
+    verse: "Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum de seus benefícios. - Salmos 103:2",
+    thought: "A memória é o combustível da gratidão. Não se esqueça.",
+    action: "Reveja fotos antigas ou um diário e agradeça a Deus por onde Ele te trouxe.",
+    reflection: "O esquecimento é inimigo da fé. Quando esquecemos o que Deus fez ontem, tememos o amanhã. O salmista prega para sua própria alma, ordenando que ela se lembre. Fazer isso ativamente combate a tendência natural humana de focar no negativo. Olhar para o retrovisor da vida e ver a mão de Deus em cada curva nos dá coragem para continuar acelerando em direção ao futuro."
   },
   11: {
-    verse: "A resposta branda desvia o furor. - Provérbios 15:1",
-    thought: "Sua mansidão é mais forte que sua gritaria.",
-    action: "Responda com gentileza e voz baixa se for provocado hoje.",
-    reflection: "É fácil reagir com raiva e aumentar o volume da discussão. É divino e sábio reagir com graça, quebrando o ciclo da ofensa. Palavras têm poder de incendiar ou de apagar o fogo. A pessoa sábia controla sua língua e, assim, controla o ambiente ao seu redor."
+    verse: "Tudo o que fizerem, seja em palavra ou em ação, façam-no em nome do Senhor Jesus, dando por meio dele graças a Deus Pai. - Colossenses 3:17",
+    thought: "Seu trabalho e suas tarefas podem ser um ato de adoração.",
+    action: "Realize uma tarefa simples (lavar louça, enviar e-mail) agradecendo a Deus pela capacidade de trabalhar.",
+    reflection: "Muitas vezes separamos o 'sagrado' (igreja, oração) do 'secular' (trabalho, rotina). A gratidão une esses dois mundos. Quando agradecemos enquanto trabalhamos, transformamos a rotina em liturgia. Agradecer pela oportunidade de ser útil, de criar, de resolver problemas, muda nossa postura de 'obrigação' para 'oportunidade'. Deus é glorificado na excelência feita com gratidão."
   },
   12: {
-    verse: "O coração do homem traça o seu caminho, mas o Senhor lhe dirige os passos. - Provérbios 16:9",
-    thought: "Faça planos, mas deixe a caneta final com Deus.",
-    action: "Ore: 'Senhor, estes são meus planos, mas faça a Tua vontade acima da minha'.",
-    reflection: "Planejar é uma virtude, mas ser rígido e inflexível é um erro. Deus tem a visão panorâmica e, às vezes, muda nossa rota para nos livrar de perigos ou nos levar a destinos melhores. A verdadeira sabedoria é caminhar com planejamento, mas com o coração aberto às reorientações do Espírito."
+    verse: "Este é o dia que o Senhor fez; regozijemo-nos e alegremo-nos nele. - Salmos 118:24",
+    thought: "Hoje é um presente exclusivo e irrepetível.",
+    action: "Ao acordar (ou agora), declare: 'Deus fez este dia para mim, vou me alegrar nele'.",
+    reflection: "Cada amanhecer é uma nova criação de Deus, um cenário inédito preparado para sua história. A gratidão nos faz acordar com expectativa em vez de tédio. Não espere pelas 'grandes datas' para celebrar. A vida acontece nas terças-feiras comuns. Decidir se alegrar no 'hoje' é um ato de rebeldia contra a apatia e uma declaração de confiança no Criador do tempo."
   },
   13: {
-    verse: "O amigo ama em todos os momentos. - Provérbios 17:17",
-    thought: "Lealdade é a marca da verdadeira amizade.",
-    action: "Mande mensagem para um amigo fiel dizendo o quanto o valoriza.",
-    reflection: "Em tempos de prosperidade, os amigos são muitos. É na adversidade ('na angústia') que a verdadeira amizade é provada e nasce o irmão. Seja o tipo de amigo que você gostaria de ter: leal, presente e constante, não apenas quando for conveniente."
+    verse: "Eu te louvo porque me fizeste de modo assombroso e maravilhoso. - Salmos 139:14",
+    thought: "Seu corpo é um templo e uma obra de arte divina.",
+    action: "Agradeça por uma parte do seu corpo que funciona bem (olhos, pernas, mãos) e cuide dela hoje.",
+    reflection: "Muitas vezes olhamos no espelho com crítica, focando nos defeitos. A gratidão nos faz olhar com admiração. Seu coração bate 100 mil vezes por dia sem você pedir. Seus olhos distinguem milhões de cores. Você é um milagre biológico. Agradecer pelo seu corpo é honrar o Arquiteto que o desenhou. Cuide dele não por vaidade, mas por gratidão."
   },
   14: {
-    verse: "A morte e a vida estão no poder da língua. - Provérbios 18:21",
-    thought: "Suas palavras criam realidades espirituais e emocionais.",
-    action: "Profetize bênçãos sobre sua casa e família hoje. Evite reclamações.",
-    reflection: "Nossa boca é um leme que dirige o navio da nossa vida. Palavras de crítica e morte geram um ambiente tóxico; palavras de fé e vida geram esperança. Pare de falar mal da sua própria vida. Use sua autoridade verbal para alinhar sua realidade com as promessas de Deus."
+    verse: "O Senhor é a minha força e o meu escudo; nele o meu coração confia, e dele recebo ajuda. Meu coração exulta de alegria... - Salmos 28:7",
+    thought: "A alegria verdadeira é fruto da confiança, não das circunstâncias.",
+    action: "Identifique um medo atual e troque-o pela declaração: 'Deus é meu escudo'. Agradeça pela proteção.",
+    reflection: "A gratidão funciona como um escudo. Quando o inimigo lança setas de dúvida ('será que Deus é bom?'), o escudo da gratidão rebate com memórias da bondade de Deus ('Ele sempre foi bom!'). A alegria que brota dessa confiança é profunda e resiliente. Ela não depende de tudo estar perfeito fora, mas de tudo estar seguro dentro, nas mãos do Pai."
   },
   15: {
-    verse: "Muitos são os planos no coração do homem, mas o que prevalece é o propósito do Senhor. - Provérbios 19:21",
-    thought: "O propósito de Deus é inabalável e soberano.",
-    action: "Descanse na soberania de Deus; o que é seu virá.",
-    reflection: "Podemos nos estressar tentando manipular as circunstâncias para fazer tudo acontecer do nosso jeito, mas no final, apenas o que Deus determinou permanecerá. Isso deve nos trazer paz, não passividade. Se alinhe ao propósito de Deus e você será imparável."
+    verse: "Mas graças a Deus, que nos dá a vitória por meio de nosso Senhor Jesus Cristo. - 1 Coríntios 15:57",
+    thought: "Você luta a partir da vitória, não apenas por ela.",
+    action: "Agradeça por uma batalha que você venceu recentemente, reconhecendo que a força veio dEle.",
+    reflection: "Em Cristo, o placar final já está decidido. A gratidão antecipada pela vitória muda nossa postura na luta. Não somos vítimas tentando sobreviver, somos vencedores tomando posse do que é nosso. Agradecer a Deus pela vitória antes mesmo de ver o problema totalmente resolvido é uma das formas mais altas de fé. É declarar que o poder da ressurreição está ativo em sua vida."
   },
   16: {
-    verse: "O homem de integridade anda seguro. - Provérbios 10:9",
-    thought: "Quem não deve, não teme.",
-    action: "Resolva qualquer pendência moral ou financeira pequena que esteja te tirando a paz.",
-    reflection: "A paz de consciência é o travesseiro mais macio que existe. A mentira e a desonestidade exigem manutenção constante e geram medo de ser descoberto. A verdade se sustenta sozinha. O caminho da integridade pode parecer mais longo, mas é o único que leva a um sono tranquilo."
+    verse: "Toda boa dádiva e todo dom perfeito vêm do alto... - Tiago 1:17",
+    thought: "Os detalhes felizes do seu dia têm a assinatura de Deus.",
+    action: "Note 3 pequenos prazeres hoje (um café bom, uma brisa, um sorriso) e sussurre 'Obrigado, Pai'.",
+    reflection: "Deus não é apenas o Deus do trovão e dos grandes milagres; Ele é o Deus dos detalhes. O gosto da sua comida favorita, o conforto da sua cama, a risada de um amigo — tudo isso são 'boas dádivas' enviadas pelo Pai das Luzes para alegrar sua alma. A gratidão nos torna caçadores de bondade, atentos aos mimos que Deus espalha em nosso caminho diariamente."
   },
   17: {
-    verse: "Como ferro com ferro se afia, assim o homem ao seu amigo. - Provérbios 27:17",
-    thought: "Relacionamentos nos moldam e nos afiam.",
-    action: "Esteja com pessoas que te desafiam a crescer espiritualmente.",
-    reflection: "O processo de afiar envolve atrito e faíscas. Relacionamentos verdadeiros nem sempre são apenas elogios; às vezes envolvem o confronto amoroso que remove nossas arestas. Valorize quem te diz a verdade e te impulsiona para mais perto de Deus, mesmo que isso doa no ego."
+    verse: "Entrem por suas portas com ações de graças e em seus pátios com louvor... - Salmos 100:4",
+    thought: "A gratidão é a senha de acesso para a presença manifesta de Deus.",
+    action: "Comece seu momento de oração hoje apenas agradecendo, sem pedir nada por 5 minutos.",
+    reflection: "Na arquitetura do Templo, havia portas e pátios antes de chegar ao Lugar Santíssimo. O salmista nos ensina que a 'chave' para atravessar essas portas é a gratidão. Quando começamos a orar apenas com pedidos e reclamações, ficamos do lado de fora. A gratidão ajusta nosso foco, nos humilha e exalta a Deus, criando o ambiente perfeito para que Sua presença se manifeste e Sua voz seja ouvida."
   },
   18: {
-    verse: "Quem esconde os seus pecados não prospera, mas quem os confessa e os abandona alcança misericórdia. - Provérbios 28:13",
-    thought: "Transparência traz cura e prosperidade.",
-    action: "Confesse uma falha a Deus e, se necessário, a alguém de confiança.",
-    reflection: "Tentar esconder nossos erros é como tentar segurar uma bola de praia debaixo d'água: exige esforço constante e uma hora ela salta para fora. A confissão libera a pressão e abre a porta para a misericórdia de Deus. A prosperidade espiritual depende de um coração limpo e arrependido."
+    verse: "O amigo ama em todos os momentos... - Provérbios 17:17",
+    thought: "Amigos leais são tesouros raros. Honre-os.",
+    action: "Envie um áudio para um amigo antigo agradecendo por sua lealdade ao longo dos anos.",
+    reflection: "A amizade é uma forma de Deus nos amar através de outra pessoa. Em um mundo de conexões superficiais, ter alguém que conhece seus defeitos e ainda assim permanece ao seu lado é um milagre. A gratidão fortalece os laços. Não assuma que seus amigos sabem que são importantes; diga a eles. A gratidão expressa nutre relacionamentos e cria raízes profundas."
   },
   19: {
-    verse: "A soberba precede a ruína... - Provérbios 16:18",
-    thought: "O orgulho é o degrau para a queda.",
-    action: "Pratique a humildade servindo alguém hoje sem esperar reconhecimento.",
-    reflection: "Quando nos achamos grandes demais, autossuficientes e superiores, paramos de depender de Deus e de ouvir os outros. Esse isolamento é o prelúdio do desastre. A humildade é o solo fértil onde a graça de Deus cresce. Mantenha-se pequeno aos seus próprios olhos e Deus te exaltará."
+    verse: "As misericórdias do Senhor são a causa de não sermos consumidos, porque as suas misericórdias não têm fim. - Lamentações 3:22",
+    thought: "Você acordou hoje porque a misericórdia de Deus foi renovada.",
+    action: "Peça perdão por um erro recente e agradeça imediatamente pela misericórdia que te cobre.",
+    reflection: "Jeremias escreveu isso no meio de uma catástrofe nacional. Ele olhou para os escombros e viu a misericórdia. O fato de estarmos vivos, de termos uma nova chance hoje, é prova de que Deus não desistiu de nós. A gratidão pela misericórdia nos torna humildes e nos impede de sermos duros com os outros. Se Deus é tão paciente comigo, como não serei grato e paciente com o próximo?"
   },
   20: {
-    verse: "Ensina a criança no caminho em que deve andar... - Provérbios 22:6",
-    thought: "O exemplo é o maior professor.",
-    action: "Seja um exemplo de fé para os mais jovens da sua família hoje.",
-    reflection: "Não deixamos herança apenas de dinheiro, mas de valores e fé. Ensinar 'no caminho' significa caminhar junto, modelando o comportamento. As crianças ouvem o que dizemos, mas imitam o que fazemos. Invista na próxima geração com seu tempo e integridade."
+    verse: "Ensina-nos a contar os nossos dias para que o nosso coração alcance sabedoria. - Salmos 90:12",
+    thought: "A brevidade da vida torna cada momento precioso.",
+    action: "Agradeça pela sua idade e pela sabedoria que os anos trouxeram, sem reclamar de envelhecer.",
+    reflection: "Saber que o tempo é limitado nos faz valorizá-lo. A gratidão nos ancora no presente. Quem reclama do passado ou se preocupa excessivamente com o futuro desperdiça o 'agora'. Agradecer pelo privilégio de envelhecer (algo que muitos não tiveram) traz uma perspectiva sábia. Cada ruga ou cabelo branco conta uma história de sobrevivência e graça. A vida é um sopro; seja grato pelo ar."
   },
   21: {
-    verse: "Como maçãs de ouro em salvas de prata, assim é a palavra dita a seu tempo. - Provérbios 25:11",
-    thought: "Falar na hora certa é uma arte valiosa.",
-    action: "Pense duas vezes antes de dar sua opinião hoje. Espere o momento certo.",
-    reflection: "O conteúdo da fala importa, mas o 'timing' é crucial. Uma verdade dita na hora errada pode ferir; dita na hora certa, cura e edifica. A sabedoria envolve sensibilidade para discernir o ambiente e o coração do ouvinte. Às vezes, o silêncio é a melhor resposta até que a hora chegue."
+    verse: "Alegrem-se na esperança, sejam pacientes na tribulação, perseverem na oração. - Romanos 12:12",
+    thought: "A gratidão alimenta a esperança e a paciência.",
+    action: "Escreva um motivo de esperança para o futuro e agradeça a Deus por Ele já estar lá.",
+    reflection: "Esperança não é otimismo cego; é a certeza de que Deus é bom e tem um futuro bom. A gratidão olha para o passado e diz 'Deus foi fiel'; a esperança olha para o futuro e diz 'Deus continuará sendo'. Quando agradecemos pelo que Ele já fez, ganhamos combustível para ter paciência na tribulação presente. A gratidão é a ponte entre a história da fidelidade de Deus e a promessa do Seu futuro."
   },
   22: {
-    verse: "Se o seu inimigo tiver fome, dê-lhe de comer... - Provérbios 25:21",
-    thought: "O bem vence o mal de forma surpreendente.",
-    action: "Faça algo bom por alguém que não gosta de você ou te tratou mal.",
-    reflection: "Isso contraria nossa natureza vingativa. Mas tratar o inimigo com bondade confunde o mal e amontoa 'brasas vivas' (consciência e arrependimento) sobre a cabeça dele. O amor é a maior arma estratégica do cristão. Não se deixe vencer pelo mal, mas vença o mal com o bem."
+    verse: "Deem graças ao Senhor, porque ele é bom. O seu amor dura para sempre. - Salmos 136:1",
+    thought: "A bondade de Deus é a base inabalável da sua vida.",
+    action: "Repita a frase 'O Teu amor dura para sempre' após agradecer por 3 coisas diferentes.",
+    reflection: "Este salmo é uma ladainha repetitiva intencional. Precisamos repetir verdades até que elas penetrem em nosso subconsciente. O amor de Deus não é volátil como o humano; é 'hesed' — amor leal, pactual, eterno. A gratidão deve ser baseada no caráter imutável de Deus, não em nossas emoções flutuantes. Ele é bom, mesmo quando o dia é mau. E por isso, sempre há motivo para gratidão."
   },
   23: {
-    verse: "Não se gabe do dia de amanhã... - Provérbios 27:1",
-    thought: "A vida é breve; viva o hoje com intensidade e propósito.",
-    action: "Faça o que é importante hoje (amar, perdoar), não procrastine.",
-    reflection: "A presunção de que temos controle sobre o tempo é perigosa. A vida é descrita como um sopro. Isso não deve gerar ansiedade, mas urgência em fazer o bem. Ame hoje, perdoe hoje, abrace hoje. Não guarde o melhor perfume apenas para uma ocasião que pode não chegar."
+    verse: "Provai e vede que o Senhor é bom. - Salmos 34:8",
+    thought: "A gratidão é uma experiência sensorial da fé.",
+    action: "Coma sua comida favorita hoje devagar, agradecendo a Deus pelo paladar e pela provisão.",
+    reflection: "Deus nos deu cinco sentidos para experimentarmos Sua criação. 'Provar' é algo íntimo e pessoal; ninguém pode provar por você. A gratidão nos tira do piloto automático. Ao saborear uma refeição, ao sentir um perfume, ao ouvir uma música, estamos provando a bondade do Criador. Não engula a vida sem mastigar. Pare, sinta, prove e agradeça. Isso é viver em adoração."
   },
   24: {
-    verse: "Foge o ímpio sem que ninguém o persiga, mas o justo é ousado como o leão. - Provérbios 28:1",
-    thought: "A justiça traz uma coragem sobrenatural.",
-    action: "Tome uma atitude corajosa hoje baseada na sua fé.",
-    reflection: "A culpa nos torna covardes e paranoicos. A consciência limpa, lavada pelo sangue de Jesus e alinhada com a Palavra, gera uma ousadia de leão. Quando sabemos que estamos com Deus, não temos nada a temer e enfrentamos os desafios de cabeça erguida."
+    verse: "Até aqui nos ajudou o Senhor. - 1 Samuel 7:12",
+    thought: "Cada passo da sua jornada teve o auxílio divino.",
+    action: "Faça um marco memorial (pode ser uma anotação ou pedra) agradecendo por uma grande vitória passada.",
+    reflection: "Samuel ergueu uma pedra (Ebenézer) para que o povo não esquecesse. A gratidão precisa de marcos visuais. Olhe para trás: você já sobreviveu a dias que pensou que te matariam. Você já recebeu provisões que pareciam impossíveis. 'Até aqui' implica que há uma jornada contínua, mas o Deus que te sustentou ontem é a garantia de que te sustentará amanhã. Celebre sua sobrevivência e o Sustentador dela."
   },
   25: {
-    verse: "O tolo dá vazão à sua ira, mas o sábio a domina. - Provérbios 29:11",
-    thought: "Autocontrole é força, não fraqueza.",
-    action: "Respire fundo e conte até 10 antes de reagir a uma irritação.",
-    reflection: "Ser explosivo não é sinal de 'personalidade forte', é falta de domínio próprio, um fruto do Espírito. O verdadeiro forte é quem conquista a si mesmo e suas emoções. Dominar a ira evita arrependimentos profundos e preserva relacionamentos."
+    verse: "Abençoarei o Senhor em todo o tempo; o seu louvor estará sempre nos meus lábios. - Salmos 34:1",
+    thought: "A gratidão é uma decisão de linguagem.",
+    action: "Faça um jejum de palavras negativas hoje. Tente não reclamar de absolutamente nada por 24h.",
+    reflection: "O que sai da nossa boca revela o que enche o coração, mas também retroalimenta o coração. Se falamos apenas problemas, sentimos mais peso. Se falamos louvor, sentimos mais leveza. Decidir ter o louvor 'sempre' nos lábios é um exercício de disciplina espiritual. É treinar a língua para falar a cultura do Céu. A reclamação atrai nuvens; a gratidão abre o céu."
   },
   26: {
-    verse: "Toda palavra de Deus é pura; ele é escudo para os que nele confiam. - Provérbios 30:5",
-    thought: "A Bíblia é sua segurança e filtro de verdade.",
-    action: "Leia a Bíblia por 15 minutos hoje buscando proteção.",
-    reflection: "Em um mundo de fake news, opiniões mutáveis e verdades relativas, a Palavra de Deus permanece como a rocha sólida e pura. Ela não contém impurezas ou erros. Confiar no que Deus diz é se colocar atrás de um escudo impenetrável contra as mentiras do inimigo."
+    verse: "Tu mudaste o meu choro em dança, a minha veste de lamento em veste de alegria. - Salmos 30:11",
+    thought: "Deus é especialista em reviravoltas.",
+    action: "Coloque uma música animada e agradeça a Deus dançando ou cantando pela alegria que virá.",
+    reflection: "A vida com Deus tem esta dinâmica: o luto não é o fim. A gratidão profética celebra a virada antes que ela aconteça. Talvez você ainda esteja no choro, mas a gratidão te lembra que a 'dança' está na sua agenda divina. Deus não desperdiça nossas lágrimas; Ele as recolhe e as transforma em chuva de bênçãos. Agradeça pela capacidade de Deus de transformar tragédias em triunfo."
   },
   27: {
-    verse: "Mulher virtuosa quem a achará? O seu valor muito excede ao de rubis. - Provérbios 31:10",
-    thought: "Caráter vale mais que beleza ou riquezas.",
-    action: "Elogie o caráter e a virtude de uma mulher importante na sua vida.",
-    reflection: "A cultura valoriza a estética e o sucesso exterior. Deus valoriza a virtude, a força de caráter e o temor do Senhor. Essas qualidades são raras e preciosas como jóias. Seja alguém que cultiva e valoriza a beleza interior que não se corrompe com o tempo."
+    verse: "Fui moço e agora sou velho, mas nunca vi o justo desamparado... - Salmos 37:25",
+    thought: "A fidelidade de Deus atravessa gerações.",
+    action: "Agradeça pela provisão financeira que você tem hoje, por menor que seja, confiando que Ele não desampara.",
+    reflection: "A ansiedade financeira é um grande ladrão de gratidão. Davi, ao final da vida, dá este testemunho ocular: Deus cuida dos Seus. 'Nunca vi'. Isso não significa ausência de dificuldade, mas ausência de abandono. A gratidão pela provisão de hoje (o pão nosso de cada dia) combate o medo da escassez de amanhã. Se Ele cuidou de você até agora, Ele não vai parar. Confie e agradeça."
   },
   28: {
-    verse: "Dá-me, filho meu, o teu coração... - Provérbios 23:26",
-    thought: "Deus quer você, não apenas suas obras ou rituais.",
-    action: "Em oração, diga a Deus: 'Eu sou Teu, toma meu coração por completo'.",
-    reflection: "No meio de tantos conselhos práticos, Deus faz um apelo relacional. Ele é um Pai amoroso que deseja conexão. Ele não quer apenas servos eficientes seguindo regras, Ele quer filhos apaixonados que confiam nEle e observam Seus caminhos por amor."
+    verse: "Pois onde estiver o seu tesouro, aí também estará o seu coração. - Mateus 6:21",
+    thought: "A generosidade é a gratidão transbordando.",
+    action: "Separe algo para doar hoje (dinheiro, roupa ou tempo). A gratidão gera generosidade.",
+    reflection: "Quem é grato sabe que nada é seu, tudo é emprestado por Deus. Isso solta nossas mãos para abençoar outros. A sovinice nasce do medo da falta; a generosidade nasce da gratidão pela abundância de Deus. Quando doamos, declaramos que confiamos na Fonte e não no recurso. A melhor maneira de dizer 'obrigado' a Deus é sendo parecido com Ele, que é o maior Doador de todos."
   },
   29: {
-    verse: "O que tapa o ouvido ao clamor do pobre também clamará e não será ouvido. - Provérbios 21:13",
-    thought: "A compaixão abre os céus para nós.",
-    action: "Ajude alguém necessitado hoje (com recursos, tempo ou atenção).",
-    reflection: "Nossa atitude com os vulneráveis reflete a realidade do nosso coração para com Deus. A generosidade destranca a provisão divina. Se queremos que Deus ouça nosso clamor, devemos ter ouvidos sensíveis ao clamor dos que sofrem ao nosso redor."
+    verse: "Combati o bom combate, terminei a corrida, guardei a fé. - 2 Timóteo 4:7",
+    thought: "A gratidão nos dá força para terminar bem.",
+    action: "Agradeça por não ter desistido até hoje. Agradeça pela perseverança que Deus te deu.",
+    reflection: "Muitos começam, poucos terminam. A gratidão é o combustível da perseverança. Quando Paulo olha para trás, no fim da vida, ele não foca nas prisões ou açoites, mas na fé guardada. Agradecer pela graça de continuar caminhando, apesar dos tropeços, nos fortalece para as últimas milhas da maratona. Você ainda está de pé. Isso é motivo de sobra para agradecer."
   },
   30: {
-    verse: "O nome do Senhor é torre forte; o justo corre para ela e está seguro. - Provérbios 18:10",
-    thought: "Há poder e refúgio no Nome de Jesus.",
-    action: "Ore invocando o nome do Senhor sobre sua casa e problemas.",
-    reflection: "Quando todos os recursos humanos falham, temos um lugar para onde correr. O Nome de Deus representa Seu caráter, Seu poder e Sua aliança. Não é um amuleto mágico, é uma Pessoa real que nos envolve e protege como uma fortaleza inexpugnável."
+    verse: "Tudo o que tem fôlego louve ao Senhor. Aleluia! - Salmos 150:6",
+    thought: "Seu propósito final é o louvor. Você foi criado para isso.",
+    action: "Escreva uma carta de compromisso a Deus: 'Decido viver uma vida de gratidão a partir de hoje'.",
+    reflection: "Chegamos ao fim da jornada, mas ao início de um estilo de vida. O livro de Salmos termina com este convite universal: se você respira, você tem um motivo e uma obrigação de louvar. A gratidão não é um evento, é a respiração da alma saudável. Que, a partir de hoje, a gratidão não seja apenas algo que você faz, mas quem você é. Um adorador grato em espírito e em verdade."
+  }
+};
+
+export const PROVERBS_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
+  1: {
+    verse: "O temor do Senhor é o princípio do conhecimento, mas os insensatos desprezam a sabedoria e a disciplina. - Provérbios 1:7",
+    thought: "Sabedoria não começa com livros, começa com reverência a Deus.",
+    action: "Antes de tomar qualquer decisão hoje, pare e pergunte: 'Senhor, o que Tu pensas sobre isso?'.",
+    reflection: "O 'temor do Senhor' não é medo de punição, mas um respeito profundo que reconhece Deus como a autoridade suprema sobre a realidade. É ajustar sua bússola moral pelo Norte verdadeiro. Sem esse ponto de partida, todo conhecimento humano é frágil. O sábio vive com a consciência constante da presença de Deus, o que pauta suas escolhas, palavras e atitudes."
+  },
+  2: {
+    verse: "Confie no Senhor de todo o seu coração e não se apoie em seu próprio entendimento. - Provérbios 3:5",
+    thought: "Sua lógica é limitada; a visão de Deus é infinita.",
+    action: "Identifique uma área onde você está tentando controlar tudo e entregue-a a Deus em oração.",
+    reflection: "Nosso 'próprio entendimento' é viciado por nossas emoções, traumas e visão limitada do futuro. Salomão nos convida a uma troca: soltar nossa necessidade de entender tudo para agarrar a mão dAquele que sabe tudo. Confiar de 'todo o coração' significa não ter plano B. É saltar nos braços de Deus sabendo que, mesmo se o caminho não fizer sentido agora, Ele conhece o destino final."
+  },
+  3: {
+    verse: "Acima de tudo, guarde o seu coração, pois dele depende toda a sua vida. - Provérbios 4:23",
+    thought: "O que você deixa entrar na sua mente define quem você se torna.",
+    action: "Faça uma faxina digital hoje: deixe de seguir perfis que poluem seu coração com inveja ou impureza.",
+    reflection: "O coração, na Bíblia, é o centro de comando da vida — vontade, emoções e intelecto. Se a fonte for contaminada, todo o rio da vida será tóxico. Guardar o coração é uma atitude defensiva ativa, como um sentinela num portão. Precisamos filtrar o que assistimos, ouvimos e as conversas que participamos. Sabedoria é ser seletivo com o que alimenta sua alma."
+  },
+  4: {
+    verse: "A morte e a vida estão no poder da língua; o que bem a utiliza come do seu fruto. - Provérbios 18:21",
+    thought: "Suas palavras são sementes. O que você está plantando?",
+    action: "Passe o dia sem reclamar. Para cada vontade de reclamar, solte uma palavra de bênção.",
+    reflection: "Não existem palavras neutras. Ou estamos construindo ou destruindo; encorajando ou desanimando; gerando vida ou morte. Salomão alerta que colheremos o fruto do que falamos. Se você vive falando em fracasso, cansaço e derrota, está programando sua mente para isso. Use sua língua como uma ferramenta de arquitetura divina para profetizar esperança sobre sua vida e a dos outros."
+  },
+  5: {
+    verse: "Consagre ao Senhor tudo o que você faz, e os seus planos serão bem-sucedidos. - Provérbios 16:3",
+    thought: "Não convide Deus para o final do projeto, convide-O para o início.",
+    action: "Dedique seu trabalho ou estudos de hoje a Deus como uma oferta de adoração.",
+    reflection: "Muitas vezes fazemos nossos planos e depois pedimos para Deus abençoar. A ordem bíblica é inversa: consagramos (entregamos a propriedade) das nossas ações a Ele primeiro. Quando o que fazemos é para a glória dEle e não apenas para nosso ego, nossos planos se alinham com a vontade dEle. O sucesso, na visão de Provérbios, não é apenas ficar rico, mas cumprir o propósito pelo qual fomos criados."
+  },
+  6: {
+    verse: "O orgulho vem antes da destruição; o espírito altivo, antes da queda. - Provérbios 16:18",
+    thought: "A humildade é o cinto de segurança da vida.",
+    action: "Peça desculpas a alguém que você feriu, sem dar justificativas ('mas eu...'). Apenas peça perdão.",
+    reflection: "O orgulho é uma cegueira espiritual que nos faz achar que somos autossuficientes e superiores. É o pecado original. A queda é inevitável para o orgulhoso porque ele para de aprender, para de ouvir conselhos e para de depender de Deus. A sabedoria abraça a humildade, reconhecendo que tudo o que temos é graça. Quem anda baixo (humilde) não tem de onde cair."
+  },
+  7: {
+    verse: "Em todo tempo ama o amigo e para a hora da angústia nasce o irmão. - Provérbios 17:17",
+    thought: "Amizade verdadeira é provada no fogo da dificuldade.",
+    action: "Ligue para um amigo que está passando por um momento difícil apenas para ouvir e orar.",
+    reflection: "O mundo define amizade por conveniência e diversão. A Bíblia define por lealdade e sacrifício. O verdadeiro amigo não é aquele que só está na festa, mas aquele que permanece quando a música acaba. Ser um amigo sábio é estar disponível nos dias maus. A sabedoria também está em escolher amigos que tenham esse caráter, pois 'quem anda com os sábios será sábio' (Pv 13:20)."
+  },
+  8: {
+    verse: "A sabedoria clama nas ruas... 'Até quando vocês, inexperientes, amarão a inexperiência?' - Provérbios 1:20-22",
+    thought: "A sabedoria não é escondida, ela é acessível a quem quer ouvir.",
+    action: "Tire 10 minutos para ler um capítulo da Bíblia ou ouvir um podcast edificante.",
+    reflection: "Salomão personifica a Sabedoria como uma mulher que grita em público. Deus não esconde a verdade de nós; Ele quer ser encontrado. O problema muitas vezes não é a falta de informação, mas a 'inexperiência' voluntária, o desejo de permanecer na ignorância para não ter que mudar de vida. Hoje, decida sair da passividade e busque ativamente a instrução divina que está disponível ao seu redor."
+  },
+  9: {
+    verse: "Não repreenda o zombador, caso contrário ele o odiará; repreenda o sábio, e ele o amará. - Provérbios 9:8",
+    thought: "Sua reação à correção revela seu nível de sabedoria.",
+    action: "Peça um feedback honesto a alguém de confiança sobre um ponto cego seu e ouça sem se defender.",
+    reflection: "O tolo vê a correção como um insulto pessoal; o sábio vê como um tesouro. Ninguém gosta de ser criticado, mas a correção é o único caminho para o crescimento. Se nos cercamos apenas de pessoas que nos elogiam, estagnamos. A maturidade espiritual se manifesta quando conseguimos engolir o orgulho e dizer 'obrigado' a quem nos aponta um erro, sabendo que isso nos torna melhores."
+  },
+  10: {
+    verse: "A bênção do Senhor traz riqueza e não inclui dor alguma. - Provérbios 10:22",
+    thought: "O sucesso que vem de Deus traz paz, não apenas lucro.",
+    action: "Examine se você está sacrificando sua família ou saúde por dinheiro. Reajuste suas prioridades.",
+    reflection: "Existe uma riqueza que vem com 'dor' — aquela conquistada com ganância, injustiça ou sacrifício da alma. E existe a riqueza que é fruto da bênção de Deus sobre o trabalho honesto. Essa última vem acompanhada de paz de espírito e propósito. Deus não é contra a prosperidade, mas Ele é contra a prosperidade que rouba sua vida. Busque a bênção dEle primeiro, e o resto será acrescentado sem o peso da culpa."
+  },
+  11: {
+    verse: "O generoso prosperará; quem dá alívio aos outros, alívio receberá. - Provérbios 11:25",
+    thought: "A economia do Reino funciona ao contrário: você ganha quando dá.",
+    action: "Faça uma doação financeira ou de tempo hoje para alguém que não pode te retribuir.",
+    reflection: "O mundo ensina a acumular para ter segurança. Provérbios ensina a espalhar para crescer. A generosidade quebra o poder do dinheiro sobre nós e nos alinha com o coração de Deus. É uma lei espiritual: a água parada apodrece, mas a água que flui se mantém fresca. Quando nos tornamos canais de bênção para os outros, Deus garante que o suprimento nunca falte na nossa própria fonte."
+  },
+  12: {
+    verse: "Os lábios que dizem a verdade permanecem para sempre, mas a língua mentirosa dura apenas um instante. - Provérbios 12:19",
+    thought: "A verdade é o alicerce mais sólido que você pode construir.",
+    action: "Seja radicalmente honesto hoje, mesmo nas pequenas coisas onde seria fácil mentir.",
+    reflection: "A mentira é um atalho que leva a um beco sem saída. Pode parecer vantajosa no curto prazo para evitar um problema ou ganhar vantagem, mas ela sempre desmorona. A verdade, por outro lado, é eterna. Construir uma reputação de integridade leva tempo, mas é o único legado que permanece. Quem anda na verdade não precisa ter boa memória para lembrar o que disse, pois vive na luz."
+  },
+  13: {
+    verse: "Aquele que anda com os sábios será cada vez mais sábio, mas o companheiro dos tolos acabará mal. - Provérbios 13:20",
+    thought: "Você é a média das pessoas com quem mais convive.",
+    action: "Avalie seu círculo íntimo. Marque um café com alguém que você admira espiritualmente.",
+    reflection: "Sabedoria é contagiosa, mas a tolice também é. Não podemos mudar as pessoas, mas podemos mudar *quais* pessoas têm acesso ao nosso coração e tempo. Se você quer crescer na fé, ande com quem tem mais fé que você. Se quer ter um casamento melhor, ande com quem honra o cônjuge. Suas companhias são profecias do seu futuro. Escolha suas influências com a mesma seriedade que escolheria um remédio."
+  },
+  14: {
+    verse: "O coração em paz dá vida ao corpo, mas a inveja apodrece os ossos. - Provérbios 14:30",
+    thought: "Sua saúde física está ligada à sua saúde emocional.",
+    action: "Identifique alguém de quem você sente inveja e ore pedindo que Deus abençoe essa pessoa ainda mais.",
+    reflection: "A inveja é como um câncer espiritual; ela consome quem a sente, não quem é invejado. Ela nasce da comparação e da ingratidão, cegando-nos para as bênçãos que já temos. Provérbios conecta isso diretamente à saúde física ('apodrece os ossos'). A cura para a inveja é a celebração. Quando aprendemos a celebrar a vitória do outro como se fosse nossa, o veneno da inveja se transforma em remédio de alegria."
+  },
+  15: {
+    verse: "A resposta branda desvia o furor, mas a palavra dura suscita a ira. - Provérbios 15:1",
+    thought: "Você tem o poder de ser um extintor de incêndio ou gasolina.",
+    action: "Em um momento de tensão hoje, escolha conscientemente baixar o tom de voz.",
+    reflection: "Conflitos são inevitáveis, mas o drama é opcional. A maioria das brigas escala não pelo assunto em si, mas pelo tom de voz e palavras ásperas. A 'resposta branda' requer uma força interior imensa; é o Espírito Santo controlando o ego. Responder com mansidão quando se é atacado desarma o oponente e abre espaço para a reconciliação. Seja quem muda a atmosfera do ambiente para a paz."
+  },
+  16: {
+    verse: "O coração do homem planeja o seu caminho, mas o Senhor lhe dirige os passos. - Provérbios 16:9",
+    thought: "Faça planos, mas escreva-os a lápis. Deixe a borracha com Deus.",
+    action: "Ore sobre seus planos futuros e diga: 'Senhor, seja feita a Tua vontade, não a minha'.",
+    reflection: "Planejar é sábio e bíblico, mas confiar cegamente nos nossos planos é arrogância. A soberania de Deus é o fator final. Às vezes, Deus muda nossa rota para nos proteger ou para nos levar a um destino melhor do que imaginávamos. A frustração nasce quando tentamos forçar nossa agenda. A paz nasce quando submetemos nossos planos à direção dEle, confiando que os desvios de Deus são melhores que os nossos atalhos."
+  },
+  17: {
+    verse: "Aquele que cobre uma ofensa promove o amor, mas quem a lança em rosto separa bons amigos. - Provérbios 17:9",
+    thought: "O amor não mantém registro de erros.",
+    action: "Decida não tocar mais num assunto passado que feriu você. Perdoe e solte.",
+    reflection: "Cobrir uma ofensa não significa ignorar abuso, mas escolher não deixar que um erro defina o relacionamento. É a glória do homem 'ignorar a ofensa' (Pv 19:11). Ficar remoendo e relembrando falhas antigas é a maneira mais rápida de destruir amizades e casamentos. O perdão é um ato de esquecimento intencional das dívidas emocionais. Seja um promotor do amor, não um arquivista de mágoas."
+  },
+  18: {
+    verse: "Torre forte é o nome do Senhor; a ela correrá o justo, e estará em alto retiro. - Provérbios 18:10",
+    thought: "Sua segurança não está na conta bancária, mas no Nome de Deus.",
+    action: "Em momentos de medo hoje, visualize-se entrando numa torre impenetrável chamada Jesus.",
+    reflection: "Em tempos antigos, a torre forte era o último refúgio quando os muros da cidade caíam. O 'Nome do Senhor' representa Seu caráter: Fiel, Poderoso, Jeová-Jireh, Pai. Quando tudo desmorona ao nosso redor, corremos para quem Ele é. Lá, estamos 'em alto retiro', acima do alcance do inimigo. A ansiedade diminui quando percebemos a robustez do nosso Abrigo."
+  },
+  19: {
+    verse: "A pessoa pode ter muitos planos em seu coração, mas o que prevalece é o propósito do Senhor. - Provérbios 19:21",
+    thought: "O propósito de Deus é imparável. Alinhe-se a ele.",
+    action: "Pergunte a Deus: 'Qual o Teu propósito para esta fase da minha vida?' e espere a resposta.",
+    reflection: "Isso nos dá um descanso profundo. Podemos nos estressar tentando fazer as coisas acontecerem, mas no final, a vontade soberana de Deus vai prevalecer. Isso não gera passividade, mas confiança. Se o seu plano falhou, talvez ele estivesse desalinhado com o propósito eterno. O sucesso real não é realizar seus sonhos, mas cumprir o desígnio de Deus para sua geração."
+  },
+  20: {
+    verse: "O espírito do homem é a lâmpada do Senhor, a qual esquadrinha todo o mais íntimo do ventre. - Provérbios 20:27",
+    thought: "Sua consciência é a luz de Deus dentro de você.",
+    action: "Faça um exame de consciência silencioso antes de dormir. O que Deus está iluminando?",
+    reflection: "Deus nos deu o espírito e a consciência como um sistema de alarme interno. Ele usa essa 'lâmpada' para iluminar áreas escuras da nossa alma — motivações egoístas, mágoas escondidas, pecados não confessados. Não ignore essa luz suave. Quando sentimos um desconforto espiritual, é o Espírito Santo nos convidando à limpeza. Uma consciência limpa é o travesseiro mais macio que existe."
+  },
+  21: {
+    verse: "Como correntes de águas, assim é o coração do rei na mão do Senhor; ele o inclina para onde quer. - Provérbios 21:1",
+    thought: "Nenhuma autoridade humana está acima da autoridade divina.",
+    action: "Ore pelas autoridades (chefes, governantes) sabendo que Deus pode mudar o coração deles.",
+    reflection: "Às vezes nos sentimos impotentes diante de decisões de chefes, governos ou juízes. Salomão, um rei, reconhece que até o coração mais poderoso da terra é como um riacho nas mãos de Deus. Ele pode desviar o curso da história num instante. Isso nos encoraja a orar em vez de nos desesperar. Deus está no controle dos bastidores da história e da sua vida profissional."
+  },
+  22: {
+    verse: "Mais digno de ser escolhido é o bom nome do que as muitas riquezas. - Provérbios 22:1",
+    thought: "Sua reputação e caráter valem mais que dinheiro.",
+    action: "Tome uma decisão hoje que custe algo financeiramente, mas preserve sua integridade.",
+    reflection: "Dinheiro vai e vem, mas o 'bom nome' (reputação baseada em caráter) é um ativo duradouro. Um bom nome abre portas que o dinheiro não compra: confiança, respeito e influência. Em um mundo que valoriza a aparência e o lucro rápido, escolher a integridade pode parecer prejuízo no curto prazo, mas é o investimento mais lucrativo para a vida e para a eternidade."
+  },
+  23: {
+    verse: "Não tenha inveja dos pecadores; antes, tenha sempre o temor do Senhor. - Provérbios 23:17",
+    thought: "O sucesso sem Deus é uma miragem. Não inveje o que não é eterno.",
+    action: "Foque na sua própria raia da corrida. Agradeça pelo que Deus te deu.",
+    reflection: "Às vezes parece que os desonestos se dão bem e prosperam. O salmista Asafe também sentiu isso (Salmo 73). A cura é o 'temor do Senhor' e a perspectiva eterna. O sucesso do pecador é temporário e frágil; a herança do justo é eterna. Invejar quem não tem Deus é desejar um castelo de areia prestes a ser levado pelo mar. Mantenha seus olhos no prêmio eterno."
+  },
+  24: {
+    verse: "Se te mostrares fraco no dia da angústia, é que a tua força é pequena. - Provérbios 24:10",
+    thought: "A crise revela o tamanho da sua força, ela não a cria.",
+    action: "Fortaleça-se hoje na Palavra para estar pronto para o dia mau.",
+    reflection: "Você não treina para a batalha durante a batalha; você treina antes. A adversidade é o teste de estresse da nossa fé. Se desmoronamos na primeira dificuldade, é sinal de que nossa estrutura espiritual precisa de reforço. Use os dias de paz para construir alicerces profundos de oração e conhecimento de Deus, para que, quando a tempestade vier, sua casa permaneça firme na Rocha."
+  },
+  25: {
+    verse: "Como a cidade derrubada, sem muro, assim é o homem que não pode conter o seu espírito. - Provérbios 25:28",
+    thought: "Sem autocontrole, você é vulnerável a qualquer ataque.",
+    action: "Identifique um gatilho que te faz perder o controle e planeje uma nova reação.",
+    reflection: "Muros na antiguidade eram a principal defesa. Uma cidade sem muros era saqueada facilmente. O autocontrole (fruto do Espírito) é o nosso muro de proteção. Quando perdemos a cabeça, a paciência ou caímos em tentação impulsiva, baixamos nossas defesas e o inimigo entra para roubar, matar e destruir. Dominar a si mesmo é uma vitória maior do que conquistar uma cidade."
+  },
+  26: {
+    verse: "Como o cão que torna ao seu vômito, assim é o tolo que reitera a sua estultícia. - Provérbios 26:11",
+    thought: "Insistir no mesmo erro esperando resultados diferentes é tolice.",
+    action: "Qual erro você tem repetido? Arrependa-se e mude a direção hoje.",
+    reflection: "Esta imagem gráfica serve para nos chocar. O arrependimento verdadeiro envolve mudança de comportamento (metanoia), não apenas remorso. Voltar ao pecado antigo, ao relacionamento tóxico ou ao hábito destrutivo é um ciclo de tolice que nos prende no passado. Deus nos oferece novidade de vida. Deixe o 'vômito' para trás e caminhe para a mesa do banquete que Ele preparou."
+  },
+  27: {
+    verse: "Feridas feitas por um amigo são leais, mas os beijos do inimigo são enganosos. - Provérbios 27:6",
+    thought: "Valorize quem te diz a verdade, mesmo que doa.",
+    action: "Agradeça a um amigo que já te confrontou ou te corrigiu por amor.",
+    reflection: "Preferimos o conforto da lisonja à dor da verdade, mas a lisonja é perigosa. O verdadeiro amigo arrisca a amizade para salvar sua alma. Ele te fere com a verdade para te curar da ilusão. Discernir entre a lealdade dura e a falsidade doce é uma habilidade crucial de sabedoria. Cerque-se de pessoas que amam você o suficiente para não deixar você se destruir."
+  },
+  28: {
+    verse: "O ímpio foge, embora ninguém o persiga, mas os justos são corajosos como o leão. - Provérbios 28:1",
+    thought: "Uma consciência limpa produz uma coragem inabalável.",
+    action: "Confesse qualquer pecado pendente para restaurar sua ousadia espiritual.",
+    reflection: "A culpa nos torna covardes e paranoicos. O 'ímpio foge' porque sua própria sombra o acusa. Mas a justiça — não a nossa, mas a de Cristo imputada a nós e vivida em integridade — nos dá a ousadia de um leão. Quando não temos nada a esconder, não temos nada a temer. Podemos encarar a vida, as pessoas e o futuro de cabeça erguida, sabendo que Deus está ao nosso lado."
+  },
+  29: {
+    verse: "Não havendo profecia (visão), o povo perece; mas o que guarda a lei, esse é bem-aventurado. - Provérbios 29:18",
+    thought: "Você precisa de uma visão de Deus para não viver à deriva.",
+    action: "Escreva em uma frase qual é a sua visão/missão de vida dada por Deus.",
+    reflection: "A palavra 'visão' aqui refere-se à revelação da vontade de Deus. Sem saber para onde estamos indo ou o que Deus quer, vivemos sem freios, desperdiçando energia em coisas irrelevantes. Uma visão clara do Céu nos dá disciplina na terra. Ela organiza nossas prioridades e nos dá motivo para acordar de manhã. Quem tem um 'porquê' divino enfrenta qualquer 'como'."
+  },
+  30: {
+    verse: "Toda palavra de Deus é pura; escudo é para os que nele confiam. - Provérbios 30:5",
+    thought: "A Palavra de Deus é a única verdade não contaminada do mundo.",
+    action: "Leia a Bíblia hoje buscando pureza e proteção, não apenas informação.",
+    reflection: "Vivemos na era das fake news, opiniões relativas e meias-verdades. A Bíblia é descrita como 'pura' — refinada, sem mistura de erro. Ela é a rocha sólida onde podemos apoiar todo o peso da nossa existência. Além disso, ela é um escudo. Conhecer a Palavra nos protege contra as mentiras do inimigo sobre nossa identidade e futuro. Confiar no que Deus diz é a maior segurança que podemos ter."
   },
   31: {
     verse: "Enganosa é a beleza e vã a formosura, mas a mulher que teme ao Senhor, essa sim será louvada. - Provérbios 31:30",
-    thought: "O temor do Senhor é o segredo da verdadeira honra e legado.",
-    action: "Reflita sobre este mês: o que você aprendeu de sabedoria e mudou na prática?",
-    reflection: "Encerramos a jornada de Provérbios como começamos: com o temor do Senhor. Essa é a chave mestra da vida. Tudo o mais passa — beleza, força, riqueza. Mas uma vida vivida em reverência e obediência a Deus deixa um legado eterno e recebe o louvor do próprio Deus."
+    thought: "O caráter permanece quando a aparência desaparece.",
+    action: "Elogie alguém hoje pelo seu caráter e fé, não pela sua aparência.",
+    reflection: "O livro de Provérbios termina exaltando o caráter virtuoso. Em uma cultura obcecada pela imagem, Deus nos lembra do que realmente importa. Beleza física é um dom, mas é passageira. O temor do Senhor é a fonte da verdadeira beleza interior que não envelhece, mas amadurece. Seja homem ou mulher, o objetivo da vida sábia é construir um legado de fé e obras que será louvado na eternidade."
   }
 };
 
-// Static Content for Healing Journey
 export const HEALING_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
-  1: { 
-    verse: "Eu sou o Senhor que te sara. - Êxodo 15:26", 
-    thought: "A cura faz parte da natureza e do nome de Deus.", 
-    action: "Declare três vezes em voz alta: 'Deus quer me curar porque Ele é o meu Médico'.", 
-    reflection: "Deus se apresenta ao povo não apenas como Criador, mas como Jeová Rapha — 'O Senhor que sara'. Isso significa que a cura não é apenas algo que Ele faz, é quem Ele é. Ao buscar a cura, estamos buscando a própria manifestação da natureza restauradora de Deus em nossos corpos e almas." 
+  1: {
+    verse: "Mas ele foi traspassado pelas nossas transgressões... e pelas suas feridas fomos curados. - Isaías 53:5",
+    thought: "A cura não é apenas uma possibilidade, é uma promessa paga na cruz.",
+    action: "Tome a Ceia (pão e suco/vinho) em casa hoje, lembrando do corpo de Cristo quebrado pela sua saúde.",
+    reflection: "A obra da cruz foi completa. Jesus não levou apenas nossos pecados, mas também nossas dores e enfermidades. A palavra 'salvação' (sozo) no grego implica integridade física, emocional e espiritual. Quando oramos por cura, não estamos tentando convencer Deus a fazer algo novo, mas reivindicando algo que Jesus já conquistou legalmente para nós há 2000 anos. A fé se apoia nesse fato consumado."
   },
-  2: { 
-    verse: "Pelas suas feridas fomos curados. - Isaías 53:5", 
-    thought: "O preço da sua cura já foi pago na cruz.", 
-    action: "Visualize Jesus levando suas dores na cruz e receba a troca divina.", 
-    reflection: "A obra da cruz foi completa. Jesus levou nossos pecados e também nossas enfermidades. A cura não é uma loteria espiritual, é um direito de herança comprado pelo sangue de Cristo. Quando oramos por cura, não estamos tentando convencer Deus a fazer algo novo, estamos reivindicando o que foi estabelecido no Calvário." 
+  2: {
+    verse: "Senhor, não sou digno de que entres em minha casa... mas dize apenas uma palavra, e o meu servo será curado. - Mateus 8:8",
+    thought: "A distância não é barreira para a Palavra de Deus.",
+    action: "Declare a Palavra de cura sobre sua vida ou de alguém, mesmo à distância.",
+    reflection: "O centurião entendeu um segredo espiritual: autoridade. Ele sabia que a doença obedecia a Jesus assim como soldados obedecem a um general. Ele não precisava da presença física de Jesus, apenas da Sua Palavra decretada. A fé na cura não depende de sentir arrepios ou emoções, mas de confiar na autoridade absoluta da Palavra de Deus sobre qualquer diagnóstico. Uma palavra dEle muda tudo."
   },
-  3: { 
-    verse: "Sara-me, Senhor, e sararei; salva-me, e serei salvo... - Jeremias 17:14", 
-    thought: "A oração por cura deve ser cheia de confiança na capacidade de Deus.", 
-    action: "Faça dessa oração de Jeremias o seu clamor pessoal hoje.", 
-    reflection: "Há uma certeza na oração do profeta: se Deus fizer, estará feito. Não há 'meia cura' ou falha médica com Deus. Ele restaura não só o corpo, mas a alma, trazendo salvação plena. Deposite sua confiança na competência do Médico dos médicos." 
+  3: {
+    verse: "Se eu tão somente tocar na orla do seu manto, ficarei sã. - Marcos 5:28",
+    thought: "A fé intencional rompe multidões e obstáculos.",
+    action: "Faça um ato de fé hoje (uma oração ousada, um jejum, ungir com óleo) buscando a Deus.",
+    reflection: "Havia uma multidão apertando Jesus, mas apenas uma mulher 'tocou' nEle de verdade. A diferença foi a fé intencional e desesperada. Ela superou barreiras sociais, físicas e religiosas para chegar até a fonte de poder. A cura muitas vezes exige essa persistência que se recusa a aceitar o 'não' das circunstâncias. O poder de Deus está sempre disponível, mas a fé é o plugue que nos conecta a essa eletricidade."
   },
-  4: { 
-    verse: "Ele perdoa todos os teus pecados e cura todas as tuas doenças. - Salmos 103:3", 
-    thought: "Perdão e cura andam de mãos dadas.", 
-    action: "Peça perdão a Deus e libere perdão a outros para desobstruir o canal da cura.", 
-    reflection: "Muitas vezes, a amargura e a culpa adoecem o corpo. O Salmo 103 conecta o perdão dos pecados à cura das doenças. Receba hoje a limpeza espiritual completa, sabendo que a saúde da alma transborda para a saúde do corpo. Deus quer te ver livre de ambos os pesos." 
+  4: {
+    verse: "Porventura não há bálsamo em Gileade? Ou não há lá médico? - Jeremias 8:22",
+    thought: "Deus é o Jeová-Rafa, o Senhor que te sara.",
+    action: "Peça a Deus sabedoria sobre tratamentos naturais ou médicos, crendo que Ele usa meios para curar.",
+    reflection: "Deus pode curar sobrenaturalmente num instante, e pode curar através de processos, remédios e médicos. O 'Bálsamo de Gileade' era um remédio real da época. A sabedoria divina não descarta a medicina, mas a consagra. Não limite a forma como Deus quer trazer sua restauração. Seja através de um milagre ou de uma mudança de hábitos de saúde, Ele é a fonte final de toda cura e vida."
   },
-  5: { 
-    verse: "A oração da fé salvará o doente, e o Senhor o levantará. - Tiago 5:15", 
-    thought: "A fé é o ativador do poder de Deus.", 
-    action: "Peça aos presbíteros ou a alguém de muita fé para orar com você.", 
-    reflection: "Não é o tamanho da fé, mas em Quem ela está depositada. Uma fé simples, mas sincera, move a mão de Deus. Tiago nos encoraja a orar uns pelos outros, lembrando que não estamos sozinhos nessa batalha pela saúde. Há poder na concordância e na oração comunitária." 
+  5: {
+    verse: "Confessai as vossas culpas uns aos outros, e orai uns pelos outros, para que sareis. - Tiago 5:16",
+    thought: "Às vezes, a cura física está ligada à cura emocional e ao perdão.",
+    action: "Existe alguma mágoa retida? Libere perdão hoje para destravar sua saúde emocional.",
+    reflection: "Tiago conecta confissão e oração mútua à cura. O corpo muitas vezes somatiza as dores da alma — culpa não resolvida, amargura, falta de perdão. A cura integral envolve limpar o interior. A oração comunitária ('uns pelos outros') também é poderosa; Deus nos desenhou para dependermos da intercessão do Corpo de Cristo. Não carregue sua dor sozinho; abra seu coração e permita que a graça flua."
   },
-  6: { 
-    verse: "Para vós... nascerá o sol da justiça, trazendo cura nas suas asas. - Malaquias 4:2", 
-    thought: "Um novo dia de saúde e justiça está amanhecendo sobre você.", 
-    action: "Tome um pouco de sol hoje e agradeça pela vida e calor de Deus.", 
-    reflection: "Assim como o sol dissipa a escuridão e o frio da noite, a presença de Jesus (o Sol da Justiça) dissipa a doença e a morte. 'Cura nas suas asas' (raios) é uma promessa de que o contato com a luz de Cristo traz restauração celular, emocional e espiritual." 
+  6: {
+    verse: "Eis que vos dou poder para pisar serpentes e escorpiões, e sobre toda a força do inimigo... - Lucas 10:19",
+    thought: "Você tem autoridade delegada por Jesus contra o mal.",
+    action: "Em voz alta, repreenda a enfermidade ou o mal que tenta te afligir, usando o nome de Jesus.",
+    reflection: "A doença não é de Deus. Embora Ele possa usá-la para seus propósitos, sua origem é a queda e o mundo quebrado. Jesus nos deu autoridade para resistir às obras do inimigo. Não ore apenas *para* Deus falando sobre a doença; fale *com* a doença sobre o seu Deus. Use a autoridade do Nome de Jesus para ordenar que o mal retroceda. Assuma sua posição de filho(a) com autoridade espiritual."
   },
-  7: { 
-    verse: "Enviou a sua palavra, e os sarou; e os livrou da sua destruição. - Salmos 107:20", 
-    thought: "A Palavra de Deus é remédio vivo.", 
-    action: "Leia versículos de cura em voz alta, como se estivesse tomando um remédio.", 
-    reflection: "A Palavra de Deus não é apenas informação, é poder criativo. Foi pela Palavra que o mundo foi criado, e é pela Palavra que nosso corpo pode ser recriado. Encha sua mente e seu ambiente com as promessas bíblicas, deixando que elas penetrem no seu espírito e tragam vida." 
+  7: {
+    verse: "Mas eis que lhe trarei a ela saúde e cura, e os sararei, e lhes manifestarei abundância de paz... - Jeremias 33:6",
+    thought: "A vontade de Deus é paz e saúde abundantes.",
+    action: "Descanse na promessa de restauração. Imagine-se saudável e agradeça a Deus por isso.",
+    reflection: "Deus tem prazer em restaurar. A palavra 'Shalom' (paz) inclui saúde, prosperidade e bem-estar completo. A cura de Deus não é apenas remover sintomas, é trazer uma abundância de vida. Mesmo que o processo seja gradual, mantenha seus olhos na promessa final de restauração. Creia que Ele está trabalhando em suas células, em sua mente e em seu espírito para trazer um alinhamento divino."
   },
-  8: { 
-    verse: "Quero, fica limpo. - Mateus 8:3", 
-    thought: "Jesus *quer* te curar. Nunca duvide da vontade dEle.", 
-    action: "Rejeite o pensamento de que a doença é vontade de Deus. Diga: 'Ele quer me curar'.", 
-    reflection: "O leproso duvidou se Jesus queria curá-lo, não se Ele podia. Jesus quebrou essa dúvida imediatamente tocando nele e dizendo: 'Eu quero'. A doença é uma intrusa na criação perfeita de Deus. O coração de Jesus sempre bate em compasso de vida e restauração para Seus filhos." 
+  8: {
+    verse: "Ele cura os de coração quebrantado e cuida das suas feridas. - Salmos 147:3",
+    thought: "As feridas da alma doem tanto quanto as do corpo, mas Deus vê ambas.",
+    action: "Escreva uma carta a Deus entregando uma dor emocional do passado.",
+    reflection: "Muitas vezes oramos por cura física, mas ignoramos o coração partido. Traumas, rejeições e perdas deixam cicatrizes profundas que afetam nossa saúde total. Deus se apresenta aqui como um médico cuidadoso que faz curativos na alma. Ele não despreza sua dor emocional. A cura completa começa de dentro para fora. Permita que Ele toque nas memórias dolorosas hoje."
   },
-  9: { 
-    verse: "O Senhor o sustentará no leito de enfermidade... - Salmos 41:3", 
-    thought: "Deus está com você, sustentando-o mesmo durante a dor.", 
-    action: "Descanse na presença dEle, sabendo que você não está sofrendo sozinho.", 
-    reflection: "Mesmo nos processos onde a cura completa demora, Deus promete um sustento sobrenatural. O texto diz que Ele 'afofa a cama' na doença, uma imagem de cuidado terno e paternal. Ele transforma o leito de dor em um lugar de encontro e fortalecimento interior." 
+  9: {
+    verse: "Filho de Davi, tem misericórdia de mim! - Marcos 10:47",
+    thought: "A persistência na oração chama a atenção de Deus.",
+    action: "Não pare de clamar. Repita sua oração por cura hoje com mais intensidade.",
+    reflection: "Bartimeu foi mandado calar a boca pela multidão, mas ele gritou ainda mais alto. Sua fé foi barulhenta e persistente. Às vezes, o silêncio de Deus ou o desânimo das circunstâncias testam nossa determinação. Jesus parou por causa do clamor dele. Não aceite a doença passivamente como 'destino'. Clame por misericórdia até que Jesus pare e pergunte: 'O que queres que eu te faça?'"
   },
-  10: { 
-    verse: "Tudo é possível ao que crê. - Marcos 9:23", 
-    thought: "Não coloque limites lógicos no poder de Deus.", 
-    action: "Rejeite diagnósticos finais de 'impossível'. A última palavra é de Deus.", 
-    reflection: "A medicina trabalha com fatos e estatísticas; a fé trabalha com a verdade revelada de Deus. A verdade é superior aos fatos. O que é impossível para a ciência é o ambiente natural para o agir de Deus. Mantenha a porta da possibilidade aberta através da sua crença." 
+  10: {
+    verse: "Perto da meia-noite, Paulo e Silas oravam e cantavam hinos a Deus... - Atos 16:25",
+    thought: "O louvor no meio da dor libera poder libertador.",
+    action: "Coloque um louvor alto e adore a Deus, mesmo se estiver sentindo dor ou desânimo.",
+    reflection: "Paulo e Silas estavam feridos, sangrando e presos. A reação natural seria reclamar, mas eles escolheram adorar. O louvor mudou a atmosfera da prisão e provocou um terremoto. A adoração tira o foco da dor e o coloca na grandeza de Deus. Quando louvamos na tempestade, confundimos o inimigo e abrimos portas para o sobrenatural intervir em nosso corpo e circunstâncias."
   },
-  11: { 
-    verse: "A alegria do Senhor é a vossa força. - Neemias 8:10", 
-    thought: "A alegria fortalece a imunidade e o espírito.", 
-    action: "Assista algo engraçado, ria ou cante, mesmo sem vontade.", 
-    reflection: "A tristeza seca os ossos e enfraquece o corpo. A alegria do Senhor, que não depende de circunstâncias, libera vida. O riso e o louvor são armas de guerra contra a enfermidade. Ao se alegrar em Deus, você está literalmente fortalecendo seu corpo para a batalha da recuperação." 
+  11: {
+    verse: "E se o Espírito daquele que dentre os mortos ressuscitou a Jesus habita em vós, aquele que dentre os mortos ressuscitou a Cristo também vivificará os vossos corpos mortais... - Romanos 8:11",
+    thought: "O mesmo poder que venceu a morte vive dentro de você agora.",
+    action: "Coloque a mão sobre seu corpo e declare: 'O Espírito de vida vivifica meu corpo agora'.",
+    reflection: "Não precisamos pedir que Deus envie o poder lá do céu; Ele já enviou o Espírito Santo para habitar em nós. Esse é o mesmo Espírito que operou a maior cura da história: a ressurreição. A cura é uma manifestação da vida de Deus expulsando a morte. Aproprie-se dessa realidade. Seu corpo é templo do Espírito, e onde Ele habita, a morte e a doença não têm direito legal de permanecer."
   },
-  12: { 
-    verse: "Eis que lhe trarei a ela saúde e cura, e os sararei... - Jeremias 33:6", 
-    thought: "Deus tem planos de restauração e abundância para você.", 
-    action: "Profetize saúde sobre seu futuro e sobre sua família.", 
-    reflection: "Deus promete revelar 'abundância de paz e segurança' junto com a cura. A restauração divina é completa: Ele quer devolver não apenas a função do corpo, mas a paz da mente e a segurança da alma. Creia que dias de saúde plena estão sendo preparados para você." 
+  12: {
+    verse: "Não é este o jejum que escolhi... para desatar as ligaduras da impiedade... e que rompas todo o jugo? - Isaías 58:6",
+    thought: "O jejum quebra resistências espirituais que impedem a cura.",
+    action: "Faça um pequeno jejum hoje (de uma refeição ou de algo que goste) com foco na sua cura.",
+    reflection: "Existem castas de oposição espiritual que 'não saem senão com oração e jejum'. O jejum não muda Deus, muda você. Ele afina sua sensibilidade espiritual e quebra a força da carne. Isaías diz que o jejum verdadeiro desata ligaduras e rompe jugos. Às vezes, a doença tem uma raiz espiritual ou uma opressão maligna por trás. O jejum é uma arma de guerra para libertar sua saúde."
   },
-  13: { 
-    verse: "Muitas são as aflições do justo, mas o Senhor o livra de todas. - Salmos 34:19", 
-    thought: "Você vai sair dessa. O livramento é a promessa final.", 
-    action: "Lembre-se de livramentos passados para encorajar sua fé hoje.", 
-    reflection: "Ser justo não nos isenta de aflições e doenças, mas nos garante uma saída. A doença é uma aflição temporária, não uma sentença eterna. A narrativa da sua vida não termina na dor; ela avança para o livramento. Mantenha os olhos na porta de saída que Deus abrirá." 
+  13: {
+    verse: "Amado, desejo que te vá bem em todas as coisas, e que tenhas saúde, assim como bem vai a tua alma. - 3 João 1:2",
+    thought: "A saúde física e a prosperidade da alma andam juntas.",
+    action: "Faça algo saudável hoje (beber mais água, caminhar, comer frutas) como ato de honra ao templo.",
+    reflection: "A vontade de Deus é o nosso bem-estar integral. João conecta a saúde do corpo à prosperidade da alma. Uma alma amargurada, ansiosa ou cheia de pecado adoece o corpo. Uma alma cheia da paz de Deus traz vigor aos ossos. Buscar a cura envolve alinhar nossa mente e emoções com a Palavra, e também cuidar do corpo com sabedoria. Deus quer que você seja saudável para cumprir seu propósito."
   },
-  14: { 
-    verse: "A tua fé te salvou; vai-te em paz. - Lucas 7:50", 
-    thought: "Celebre a cura pela fé antes de vê-la com os olhos.", 
-    action: "Agradeça a Deus pela cura completa como se já estivesse materializada.", 
-    reflection: "Encerramos a jornada crendo. A fé é a certeza das coisas que se esperam. Quando Jesus via a fé, Ele liberava o milagre. Caminhe em paz, sabendo que a obra foi feita no mundo espiritual e, no tempo certo, se manifestará plenamente no natural. Viva como um curado." 
+  14: {
+    verse: "Vá, a sua fé o curou. - Marcos 10:52",
+    thought: "A fé é o agente ativador do poder de Deus.",
+    action: "Comece a agir como alguém curado. Planeje o futuro sem a limitação da doença.",
+    reflection: "Jesus frequentemente atribuía a cura à fé da pessoa. 'A tua fé te salvou'. A fé não é negar a realidade da doença, mas negar o direito dela de ditar seu futuro. É uma certeza interior de que a Palavra de Deus é mais real que os sintomas. Ao encerrar esta jornada, mantenha a postura de fé. Agradeça pela cura, mesmo que a recuperação seja progressiva. Caminhe na certeza de que o Médico dos Médicos já deu a ordem."
   }
 };
 
-// Static Content for Open Doors Journey
 export const OPEN_DOORS_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
-  1: { 
-    verse: "O meu Deus suprirá todas as necessidades de vocês... - Fp 4:19", 
-    thought: "Deus é a fonte; o emprego é apenas um canal.", 
-    action: "Liste suas necessidades financeiras e entregue-as em oração.", 
-    reflection: "Muitas vezes ficamos ansiosos porque olhamos para os 'canais' (emprego, clientes, economia) e os vemos secando. Mas a nossa 'Fonte' é Deus, e Ele nunca seca. Paulo afirma isso aos Filipenses que eram generosos. A promessa de suprimento está ligada à riqueza da glória de Cristo, não à economia da terra." 
+  1: {
+    verse: "Eis que diante de ti pus uma porta aberta, e ninguém a pode fechar... - Apocalipse 3:8",
+    thought: "O que Deus abre, homem nenhum, demônio nenhum pode fechar.",
+    action: "Declare três vezes: 'Minha vida está sob o favor de Deus e Ele abre o caminho para mim'.",
+    reflection: "A soberania de Deus é a base da nossa confiança por portas abertas. Não dependemos de 'sorte', 'QI' (quem indica) ou manipulação humana. Jesus tem a 'chave de Davi'. Quando Ele decide que é o tempo de uma nova estação em sua vida, as circunstâncias se alinham sobrenaturalmente. Descanse na certeza de que, se a porta for dEle, ela permanecerá aberta, não importa a oposição."
   },
-  2: { 
-    verse: "O Senhor abrirá o seu bom tesouro, o céu... - Dt 28:12", 
-    thought: "A chuva de bênçãos virá sobre o trabalho das suas mãos.", 
-    action: "Seja fiel e excelente no pouco que você tem para fazer hoje.", 
-    reflection: "Deus promete abençoar 'toda a obra das tuas mãos'. Ele não abençoa a inatividade. Prepare o terreno, envie os currículos, faça os contatos. A parte dEle é mandar a chuva (oportunidade e favor); a sua parte é ter a terra arada e pronta para receber." 
+  2: {
+    verse: "Pedi, e dar-se-vos-á; buscai, e encontrareis; batei, e abrir-se-vos-á. - Mateus 7:7",
+    thought: "A persistência é a chave que gira a fechadura.",
+    action: "Seja específico: escreva exatamente qual porta você quer que se abra e ore por ela com detalhes.",
+    reflection: "Deus ama a ousadia. Os verbos 'pedir, buscar, bater' estão no contínuo: continue pedindo, continue buscando. Muitas portas não se abrem porque paramos de bater cedo demais ou porque pedimos de forma vaga. A fé ativa se move em direção à oportunidade. Não espere a porta cair no seu colo; vá até ela, prepare-se, bata através da oração e da ação prática."
   },
-  3: { 
-    verse: "Busquem, pois, em primeiro lugar o Reino de Deus... - Mt 6:33", 
-    thought: "Prioridades certas destravam a provisão divina.", 
-    action: "Comece o dia orando e lendo a Bíblia antes de checar emails ou vagas.", 
-    reflection: "Existe uma ordem espiritual para o sucesso. Quando colocamos os interesses de Deus (Seu Reino, Sua justiça) no topo da nossa agenda, Ele assume a responsabilidade pelas nossas necessidades básicas (comida, roupa, teto). Alinhe suas prioridades e veja Deus alinhar sua vida financeira." 
+  3: {
+    verse: "Pois tu, Senhor, abençoarás ao justo; circundá-lo-ás da tua benevolência como de um escudo. - Salmos 5:12",
+    thought: "O favor de Deus te destaca no meio da multidão.",
+    action: "Ore pedindo 'favor imerecido' em suas entrevistas, reuniões ou projetos hoje.",
+    reflection: "Favor é quando Deus faz as pessoas gostarem de você, confiarem em você ou quererem te ajudar, muitas vezes sem explicação lógica. É o 'escudo' que atraiu José na prisão e Ester no palácio. O favor distingue o filho de Deus. Não é mérito seu, é a benevolência dEle te cercando. Espere ser tratado de forma diferente, não por quem você é, mas por Quem está com você."
   },
-  4: { 
-    verse: "Eis que diante de ti pus uma porta aberta que ninguém pode fechar. - Ap 3:8", 
-    thought: "O favor de Deus é soberano e imparável.", 
-    action: "Declare em voz alta: 'A porta que Deus abre para mim, homem nenhum fecha'.", 
-    reflection: "Não tema a concorrência, a crise ou a opinião de homens. Quando Deus decide promover alguém e abrir uma porta de oportunidade, nenhuma força no universo pode bloquear. Descanse na soberania de Deus que controla as chaves do seu destino profissional." 
+  4: {
+    verse: "Seja sobre nós a graça do Senhor... confirma a obra das nossas mãos. - Salmos 90:17",
+    thought: "Deus abençoa o movimento, não a estagnação.",
+    action: "Faça algo prático hoje para se preparar para a porta que você quer (estude, melhore o currículo, organize-se).",
+    reflection: "Moisés orou para que Deus confirmasse a obra das mãos. Deus não abençoa mãos vazias ou preguiçosas. A porta aberta geralmente encontra quem já está trabalhando ou se preparando. A 'sorte' bíblica é quando o preparo encontra a oportunidade divina. Mostre a Deus que você é um bom mordomo do pouco que tem agora, e Ele confiará o muito que virá com a nova porta."
   },
-  5: { 
-    verse: "Entrega o teu caminho ao Senhor; confia nele, e ele o fará. - Salmos 37:5", 
-    thought: "Solte o controle e deixe Deus agir.", 
-    action: "Pare de se preocupar por 1 hora. Quando a ansiedade vier, diga: 'Eu já entreguei'.", 
-    reflection: "A ansiedade e a tentativa de controle muitas vezes atrapalham o agir de Deus. 'Entregar' significa tirar das suas mãos e colocar nas dEle. Confiar significa crer que Ele fará melhor do que você. É uma parceria onde você descansa na fé enquanto Ele trabalha nos bastidores." 
+  5: {
+    verse: "Eis que faço uma coisa nova... Não a percebeis? - Isaías 43:19",
+    thought: "Para entrar no novo, às vezes é preciso soltar o velho.",
+    action: "Identifique um hábito ou mentalidade antiga que não cabe na nova fase e decida abandoná-lo.",
+    reflection: "Muitas vezes oramos por portas novas, mas estamos apegados a chaves velhas. Deus pergunta: 'Não percebeis?'. Às vezes a porta já está se abrindo, mas estamos tão focados no passado, nos fracassos anteriores ou no 'sempre foi assim' que não vemos o caminho novo que Ele está abrindo no deserto. Esteja disposto a mudar, a aprender coisas novas e a deixar para trás bagagens que não servem para o futuro."
   },
-  6: { 
-    verse: "Sabeis que o vosso trabalho não é vão no Senhor. - 1 Co 15:58", 
-    thought: "Nenhum esforço feito com fé é desperdiçado.", 
-    action: "Faça seu trabalho (ou a busca por ele) hoje com alegria e esperança.", 
-    reflection: "Deus vê cada currículo enviado, cada entrevista, cada hora de estudo e cada dia de trabalho honesto. Nada passa despercebido. No tempo certo, haverá uma colheita para toda semente de esforço que você plantou. Não desanime; a recompensa vem do Senhor." 
+  6: {
+    verse: "Porque a promoção não vem do leste, nem do oeste, nem do sul... Mas Deus é o juiz. - Salmos 75:6-7",
+    thought: "Sua promoção não vem do chefe, vem do Céu.",
+    action: "Trabalhe hoje como se Jesus fosse seu chefe direto, com excelência, sem buscar aplausos humanos.",
+    reflection: "É libertador saber que nossa carreira e destino não estão nas mãos de um gerente humano, da economia ou da política. Deus é quem abate um e exalta outro. Isso remove a necessidade de puxar saco ou trapacear para subir. Se Deus quer te levantar, Ele moverá céus e terra para te colocar na posição certa. Mantenha seu coração humilde e íntegro, e deixe que Ele cuide da sua exaltação no tempo certo."
   },
-  7: { 
-    verse: "Trazei todos os dízimos à casa do tesouro... - Ml 3:10", 
-    thought: "A generosidade quebra o ciclo da escassez.", 
-    action: "Seja generoso com alguém hoje, mesmo que seja com pouco.", 
-    reflection: "A economia do Reino funciona pela lógica inversa do mundo: retemos para perder e damos para ganhar. A fidelidade nos dízimos e ofertas não é uma troca comercial com Deus, mas uma declaração de confiança de que Ele é o dono de tudo. A generosidade abre as janelas do céu." 
-  },
-  8: { 
-    verse: "O Senhor é o meu pastor; de nada terei falta. - Salmos 23:1", 
-    thought: "A escassez não é o seu destino final.", 
-    action: "Repita o Salmo 23, visualizando Deus guiando você a pastos verdes.", 
-    reflection: "Você tem um Pastor responsável e bom. A função do pastor é garantir que as ovelhas tenham o que comer e onde descansar. Se você está seguindo a Jesus, a falta é apenas um vale passageiro, não o lugar de habitação. Ele sabe onde estão os recursos que você precisa." 
-  },
-  9: { 
-    verse: "Tudo o que fizerem, façam de todo o coração, como para o Senhor. - Cl 3:23", 
-    thought: "A excelência atrai promoção e destaque.", 
-    action: "Melhore algo no seu trabalho ou apresentação pessoal hoje.", 
-    reflection: "Seu chefe real é Jesus Cristo. Quando você trabalha com excelência, integridade e dedicação, mesmo que ninguém veja, você está adorando a Deus. Essa atitude se destaca no mundo espiritual e natural, atraindo favor e oportunidades de crescimento." 
-  },
-  10: { 
-    verse: "Pois eu bem sei os planos que tenho para vós... - Jr 29:11", 
-    thought: "Seu futuro já está planejado e é cheio de esperança.", 
-    action: "Sonhe com seu futuro profissional e escreva um objetivo.", 
-    reflection: "O desemprego ou a estagnação não são o fim da sua história. Deus tem pensamentos de paz e um futuro para você. O momento atual é apenas um capítulo de preparação ou transição. Confie no Autor da sua história, Ele está escrevendo uma virada." 
-  },
-  11: { 
-    verse: "A bênção do Senhor é que enriquece; e não traz com ela dores. - Pv 10:22", 
-    thought: "Busque a bênção de Deus, não apenas o dinheiro a qualquer custo.", 
-    action: "Ore pedindo sabedoria financeira e paz na prosperidade.", 
-    reflection: "Dinheiro conquistado sem Deus pode trazer dor, insônia e problemas familiares. A prosperidade que vem da bênção do Senhor é completa: traz recursos e também a paz para desfrutá-los. Busque a riqueza que vem da mão de Deus, que é leve e abençoadora." 
-  },
-  12: { 
-    verse: "Fui moço, e agora sou velho; mas nunca vi desamparado o justo. - Salmos 37:25", 
-    thought: "Deus tem um histórico impecável de fidelidade.", 
-    action: "Lembre-se de como Deus proveu em momentos difíceis no passado.", 
-    reflection: "O salmista Davi, olhando para trás em sua vida, testemunha a fidelidade constante de Deus. Se Ele cuidou de você ontem, cuidará hoje e amanhã. O justo (aquele justificado por Deus) pode passar por aperto, mas nunca será abandonado ou deixado à mendicidade espiritual." 
-  },
-  13: { 
-    verse: "Lança o teu pão sobre as águas, porque depois de muitos dias o acharás. - Ec 11:1", 
-    thought: "É tempo de investir, arriscar e plantar.", 
-    action: "Tente algo novo profissionalmente (um curso, um contato, uma ideia).", 
-    reflection: "Não tenha medo de diversificar e semear em lugares que parecem incertos. A lei da semeadura é infalível. Quem guarda as sementes por medo nunca terá colheita. Arrisque-se com a direção de Deus, lance seu talento no mundo, e o retorno virá no tempo oportuno." 
-  },
-  14: { 
-    verse: "Não digam: 'A minha força e o poder do meu braço me conseguiram estas riquezas'. - Dt 8:17", 
-    thought: "Toda habilidade e força vêm de Deus.", 
-    action: "Agradeça a Deus pelos seus talentos e inteligência.", 
-    reflection: "A humildade mantém as portas abertas. Quando começamos a achar que somos autossuficientes e que nosso sucesso se deve apenas ao nosso brilho, nos desconectamos da Fonte. Reconheça Deus como a origem da sua capacidade de produzir riqueza e Ele continuará te capacitando." 
-  },
-  15: { 
-    verse: "Até aqui nos ajudou o Senhor. - 1 Sm 7:12", 
-    thought: "Ebenezer: Celebre cada etapa da jornada.", 
-    action: "Faça uma pausa para agradecer pelo que você já tem.", 
-    reflection: "A gratidão pelo pouco qualifica você para o muito. Celebre as pequenas vitórias, os pagamentos parciais, os trabalhos temporários. Cada provisão é um testemunho de que Deus está ajudando. A ingratidão fecha portas; o louvor as escancara." 
-  },
-  16: { 
-    verse: "Clama a mim, e responder-te-ei, e anunciar-te-ei coisas grandes e firmes... - Jr 33:3", 
-    thought: "Deus tem ideias criativas e soluções ocultas para você.", 
-    action: "Peça a Deus uma ideia nova ou estratégia para seu trabalho.", 
-    reflection: "Muitas vezes, a chave para uma virada financeira é uma ideia divina, uma invenção, uma solução criativa para um problema. Deus quer te revelar 'coisas ocultas' que você não sabe. Busque a sabedoria do alto para os seus negócios e carreira." 
-  },
-  17: { 
-    verse: "O Senhor te porá por cabeça e não por cauda. - Dt 28:13", 
-    thought: "Você nasceu para influenciar e liderar, não para ser dominado.", 
-    action: "Tenha postura de líder hoje: proativo, ético e servidor.", 
-    reflection: "Essa promessa fala de posição e influência. Deus quer que Seus filhos sejam referência de excelência onde estiverem. Não aceite a mediocridade ou a mentalidade de vítima. Você tem o Espírito de Deus; assuma sua identidade de filho do Rei no mercado de trabalho." 
-  },
-  18: { 
-    verse: "Se Deus é por nós, quem será contra nós? - Rm 8:31", 
-    thought: "Com Deus ao seu lado, você é a maioria.", 
-    action: "Enfrente um desafio ou medo profissional com coragem hoje.", 
-    reflection: "Podem haver crises econômicas, chefes difíceis ou falta de vagas, mas se o Criador do universo está apoiando sua causa, nenhum obstáculo é insuperável. Caminhe com a confiança de quem tem o melhor Sócio e Advogado do mundo." 
-  },
-  19: { 
-    verse: "Considerai os lírios do campo... - Mt 6:28", 
-    thought: "Não se preocupe; o cuidado de Deus é detalhado e belo.", 
-    action: "Olhe para a natureza e lembre-se que você vale mais que as flores.", 
-    reflection: "Jesus usa a natureza para combater nossa ansiedade financeira. Se Deus investe tanta beleza em flores que duram pouco, quanto mais Ele investirá em você, filho eterno e amado? A preocupação não acrescenta um centímetro à sua vida, mas a confiança no Pai traz paz e provisão." 
-  },
-  20: { 
-    verse: "Preparas uma mesa perante mim na presença dos meus inimigos. - Salmos 23:5", 
-    thought: "Deus vai te honrar publicamente.", 
-    action: "Não busque vingança contra quem te prejudicou; deixe Deus te exaltar.", 
-    reflection: "Às vezes, enfrentamos oposição e inveja no trabalho. A promessa de Deus não é apenas de sobrevivência, mas de honra pública ('mesa farta'). Deus fará com que aqueles que duvidaram ou se opuseram a você vejam o favor dEle sobre a sua vida. Mantenha o coração limpo." 
-  },
-  21: { 
-    verse: "Crede no Senhor vosso Deus, e estareis seguros; crede nos seus profetas, e prosperareis. - 2 Cr 20:20", 
-    thought: "A fé e a obediência profética abrem o caminho da prosperidade.", 
-    action: "Declare vitória e prosperidade sobre sua vida financeira hoje.", 
-    reflection: "Encerramos a jornada com a chave de Josafá: fé em Deus (segurança) e fé na Palavra profética (prosperidade). A prosperidade bíblica é o resultado de confiar em Deus e seguir Suas instruções. Saia desta jornada crendo que as portas já estão abertas no mundo espiritual e você entrará por elas!" 
+  7: {
+    verse: "Prepara a tua obra de fora, e apronta-a no teu campo; e depois edifica a tua casa. - Provérbios 24:27",
+    thought: "Planejamento e ordem precedem a expansão.",
+    action: "Organize sua vida financeira ou sua agenda. A ordem atrai a bênção.",
+    reflection: "Salomão ensina um princípio de prioridades: primeiro prepare a fonte de sustento (o campo), depois construa o conforto (a casa). Deus muitas vezes espera colocarmos ordem no caos antes de abrir a porta da abundância. Se não somos fiéis na organização do pouco, como gerenciaremos o muito? A porta aberta exige estrutura para ser mantida. Organize-se para receber o que você está pedindo."
   }
 };
 
-// Static Content for Restoration Journey
 export const RESTORATION_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
-  1: { 
-    verse: "Sejam bondosos e compassivos uns para com os outros, perdoando-se mutuamente... - Ef 4:32", 
-    thought: "O perdão é a chave que destranca a prisão da amargura.", 
-    action: "Decida perdoar alguém hoje, não por sentimento, mas por obediência.", 
-    reflection: "O perdão não é um sentimento, é uma decisão de cancelar a dívida moral que alguém tem com você. Assim como Deus nos perdoou em Cristo (uma dívida impagável), somos chamados a estender essa graça. Guardar mágoa é beber veneno esperando que o outro morra. Liberte-se hoje." 
+  1: {
+    verse: "Suportem-se uns aos outros e perdoem as queixas... Assim como o Senhor os perdoou, perdoem também. - Colossenses 3:13",
+    thought: "O perdão não é um sentimento, é uma decisão de cancelar a dívida.",
+    action: "Ore abençoando a pessoa que te feriu, decidindo não cobrar mais a ofensa emocionalmente.",
+    reflection: "Restauração começa quando paramos de esperar que o outro pague pelo que fez. Jesus pagou nossa dívida impagável na cruz; isso nos tira o direito de sermos cobradores implacáveis dos outros. Perdoar não é esquecer ou concordar com o erro, é soltar o prisioneiro e descobrir que o prisioneiro era você. A decisão de perdoar desobstrui o canal para Deus restaurar o relacionamento ou curar seu coração."
   },
-  2: { 
-    verse: "O amor cobre uma multidão de pecados. - 1 Pe 4:8", 
-    thought: "O amor escolhe focar na restauração, não na falha.", 
-    action: "Elogie alguém que você ama em vez de criticar um erro.", 
-    reflection: "Cobrir pecados não é encobrir crimes ou abusos, mas é a atitude de não expor as falhas do outro para humilhação pública ou para 'vencer' uma discussão. O amor busca proteger a dignidade do outro e criar um ambiente seguro onde a mudança pode acontecer." 
+  2: {
+    verse: "Acima de tudo, porém, tende amor intenso uns para com os outros, porque o amor cobre uma multidão de pecados. - 1 Pedro 4:8",
+    thought: "O amor escolhe focar no futuro, não nos erros do passado.",
+    action: "Faça um ato de bondade inesperado para a pessoa com quem você quer restaurar o vínculo.",
+    reflection: "O amor 'cobre' pecados não no sentido de encobrir o mal (mentira), mas no sentido de não expor o outro à vergonha desnecessária e de absorver o impacto da ofensa para salvar a relação. É como um tecido forte que remenda o rasgo. Onde há amor intenso, pequenos erros não se tornam grandes guerras. Decida hoje ser um agente de graça, cobrindo falhas com misericórdia em vez de apontá-las com julgamento."
   },
-  3: { 
-    verse: "Confessai as vossas culpas uns aos outros e orai uns pelos outros. - Tg 5:16", 
-    thought: "A humildade e a transparência trazem cura aos relacionamentos.", 
-    action: "Peça desculpas sinceramente por um erro seu, sem dar desculpas.", 
-    reflection: "A frase 'eu errei' tem um poder desarmante. O orgulho constrói muros; a humildade constrói pontes. Quando confessamos nossas falhas, saímos da posição de defesa e ataque e entramos no terreno da graça. A cura relacional acontece quando dois pecadores admitem que precisam de graça." 
+  3: {
+    verse: "Sejam todos prontos para ouvir, tardios para falar e tardios para irar-se. - Tiago 1:19",
+    thought: "A maioria dos conflitos nasce de ouvir para responder, não para entender.",
+    action: "Em sua próxima conversa, tente ouvir o dobro do que fala. Valide o sentimento do outro.",
+    reflection: "A restauração exige comunicação humilde. Tiago nos dá a regra de ouro dos relacionamentos: ouvidos abertos, boca controlada. Muitas vezes 'vencemos' a discussão com argumentos lógicos, mas perdemos o coração da pessoa. Ser 'tardio para falar' dá tempo ao Espírito Santo para filtrar nossas palavras. Ouvir com empatia, tentando entender a dor por trás do ataque, é o primeiro passo para derrubar muros de defesa."
   },
-  4: { 
-    verse: "Não se ponha o sol sobre a vossa ira. - Ef 4:26", 
-    thought: "Resolva os conflitos rapidamente; o tempo não cura, ele infecciona.", 
-    action: "Não vá dormir brigado hoje. Busque a paz antes do fim do dia.", 
-    reflection: "Deixar a raiva acumular de um dia para o outro dá 'lugar ao diabo' — cria uma oportunidade para o inimigo plantar sementes de amargura e divisão. A sabedoria bíblica é manter a conta curta. Resolva, perdoe, converse. Não deixe o silêncio punitivo reinar na sua casa." 
+  4: {
+    verse: "Tira primeiro a trave do teu olho, e então cuidarás em tirar o argueiro do olho do teu irmão. - Mateus 7:5",
+    thought: "A mudança no relacionamento começa com a mudança em mim.",
+    action: "Pergunte a Deus: 'Onde eu errei? O que eu preciso mudar?' e seja sincero.",
+    reflection: "É fácil ser um especialista nos erros dos outros e um advogado de defesa dos nossos próprios erros. Jesus chama isso de hipocrisia. A restauração genuína acontece quando assumimos responsabilidade pela nossa parte no conflito, mesmo que seja apenas 1%. Humildade atrai humildade. Quando baixamos as armas e admitimos nossas falhas ('a trave'), criamos um ambiente seguro para o outro também reconhecer as dele."
   },
-  5: { 
-    verse: "Suportai-vos uns aos outros... - Cl 3:13", 
-    thought: "Ninguém é perfeito; a paciência é a prova do amor.", 
-    action: "Tenha paciência com um defeito repetitivo de alguém hoje.", 
-    reflection: "A palavra 'suportar' significa literalmente dar suporte, segurar a barra. Amar alguém perfeito é fácil; amar alguém com falhas, manias e dias ruins exige o amor de Deus. Lembre-se de quanta paciência Deus tem com você todos os dias e estenda essa mesma medida ao próximo." 
+  5: {
+    verse: "A resposta branda desvia o furor, mas a palavra dura suscita a ira. - Provérbios 15:1",
+    thought: "Você tem o poder de baixar a temperatura da briga.",
+    action: "Se surgir um conflito hoje, responda com voz baixa e calma, mesmo se tiver razão.",
+    reflection: "Fogo não se apaga com fogo, mas com água. Palavras duras são gasolina em relacionamentos em crise. A 'resposta branda' é uma arma espiritual poderosa; ela quebra o ciclo de ação e reação do orgulho. Não é fraqueza, é autodomínio guiado pelo Espírito. Escolher a mansidão quando se tem vontade de gritar é um ato de amor que pode salvar um casamento ou uma amizade da destruição."
   },
-  6: { 
-    verse: "A resposta branda desvia o furor. - Pv 15:1", 
-    thought: "A gentileza quebra o ciclo da agressividade.", 
-    action: "Se o clima esquentar, responda com voz baixa e palavras doces.", 
-    reflection: "Em uma discussão, a tendência é aumentar o tom de voz. A sabedoria divina ensina o oposto. Uma resposta mansa é como água no fogo. Ela desativa a defesa do outro e abre caminho para a razão e o entendimento. A gentileza é uma arma poderosa de restauração." 
+  6: {
+    verse: "Melhor é serem dois do que um... Se um cair, o amigo pode ajudá-lo a levantar-se. - Eclesiastes 4:9-10",
+    thought: "Fomos criados para a conexão. O orgulho isola, o amor une.",
+    action: "Convide a pessoa para fazer algo juntos que não envolva discutir a relação (um passeio, um café).",
+    reflection: "Restauração também precisa de reconexão positiva. Às vezes focamos tanto em resolver os problemas que esquecemos de ser amigos. Lembre-se do valor da parceria. Deus disse que 'não é bom que o homem esteja só'. O inimigo quer dividir para conquistar. Lute pela unidade. Relembrem por que é melhor estarem juntos. Criar novas memórias boas ajuda a curar as memórias ruins do passado."
   },
-  7: { 
-    verse: "O amor é paciente, o amor é bondoso. - 1 Co 13:4", 
-    thought: "O amor não é apenas o que sentimos, é o que fazemos.", 
-    action: "Faça um ato de serviço prático para quem você ama hoje.", 
-    reflection: "Paulo descreve o amor com verbos de ação. O amor serve, espera, tolera e se doa. Muitas vezes os relacionamentos esfriam porque paramos de 'fazer' amor (atos de bondade) e ficamos esperando apenas 'sentir'. Reacenda o vínculo através do serviço altruísta." 
-  },
-  8: { 
-    verse: "O que Deus ajuntou não o separe o homem. - Mt 19:6", 
-    thought: "Lute pela sua aliança; Deus está nela com você.", 
-    action: "Ore blindando seu casamento e sua família contra divisão.", 
-    reflection: "O casamento e a família são projetos de Deus, não invenções humanas. Por isso, há uma batalha espiritual contra eles. Mas também há uma graça divina para sustentá-los. Acredite que o Deus que uniu tem poder para manter unido e restaurar o que parece quebrado. Vale a pena lutar." 
-  },
-  9: { 
-    verse: "Sobretudo, revistam-se do amor, que é o elo perfeito. - Cl 3:14", 
-    thought: "O amor é a cola que mantém tudo unido.", 
-    action: "Diga 'eu te amo' e dê um abraço demorado hoje.", 
-    reflection: "Podemos ter regras, rotinas e acordos, mas sem amor, tudo se solta. O amor ágape — o amor de escolha e compromisso — é o 'elo perfeito' que cimenta o relacionamento, tornando-o resistente às tempestades da vida. Revista-se desse amor diariamente como quem veste uma roupa." 
-  },
-  10: { 
-    verse: "Restaurarei o que foi consumido... - Jl 2:25", 
-    thought: "Deus é especialista em recomeços e restituição.", 
-    action: "Creia e declare a restauração completa dos seus relacionamentos.", 
-    reflection: "A promessa de Joel fala sobre anos perdidos sendo restaurados. Deus pode curar feridas antigas e devolver a alegria que foi roubada de um relacionamento. Não importa quão seco esteja o vale, o Espírito de Deus pode soprar vida. Encerre esta jornada com a esperança de que o melhor de Deus para sua família ainda está por vir." 
+  7: {
+    verse: "Um cordão de três dobras não se rompe com facilidade. - Eclesiastes 4:12",
+    thought: "Convide Jesus para ser o terceiro fio no relacionamento.",
+    action: "Se possível, orem juntos hoje. Se não, ore intensamente intercedendo pela pessoa.",
+    reflection: "Relacionamentos humanos são frágeis quando baseados apenas em amor humano. Precisamos do 'terceiro fio': Deus. Quando Ele é o centro, a corda ganha uma resistência sobrenatural. Um casal ou amigos que oram juntos ou buscam a Deus, encontram nEle a força para perdoar e amar além dos limites humanos. Entregue o vínculo a Deus hoje; o que Ele une e restaura, fica firme."
   }
 };
 
-// Static Content for Impossible Causes Journey
 export const IMPOSSIBLE_CAUSES_JOURNEY_DAYS: Record<number, ChallengeDayContent> = {
-  1: { 
-    verse: "Para Deus nada é impossível. - Lc 1:37", 
-    thought: "A palavra 'impossível' não existe no vocabulário de Deus.", 
-    action: "Entregue sua causa impossível a Ele e tire o peso dos ombros.", 
-    reflection: "O anjo Gabriel disse isso a Maria diante de uma gravidez virginal. O que desafia a biologia, a física e a lógica humana é o terreno natural de Deus. Quando dizemos que algo é impossível, estamos apenas descrevendo nossos limites humanos, não os limites de Deus. Onde terminam seus recursos, começa o infinito poder dEle." 
+  1: {
+    verse: "Porque para Deus nada é impossível. - Lucas 1:37",
+    thought: "A palavra 'impossível' não existe no dicionário do Céu.",
+    action: "Escreva seu problema 'impossível' em um papel e escreva em cima, grande: DEUS É MAIOR.",
+    reflection: "O anjo Gabriel disse isso a Maria quando anunciou uma gravidez virginal. O cenário humano era biologicamente impossível, mas a realidade divina se sobrepôs. Sua causa pode parecer morta, enterrada ou sem solução lógica. Mas Deus é especialista em situações sem saída. Ele não precisa de matéria-prima favorável; Ele cria do nada. Comece esta jornada tirando os limites da sua fé."
   },
-  2: { 
-    verse: "Acaso há alguma coisa difícil demais para mim? - Jr 32:27", 
-    thought: "Deus desafia sua incredulidade com uma pergunta.", 
-    action: "Responda a Deus em oração: 'Senhor, nada é difícil para Ti'.", 
-    reflection: "Deus faz essa pergunta retórica a Jeremias. Ele quer que olhemos para o tamanho do nosso problema e depois olhemos para o tamanho do nosso Deus. Comparado ao Criador das galáxias, seu 'gigante' é minúsculo. A dificuldade é uma questão de perspectiva. Para o Todo-Poderoso, o milagre é fácil." 
+  2: {
+    verse: "Tende fé em Deus... quem disser a este monte: Ergue-te e lança-te no mar... assim lhe será feito. - Marcos 11:22-23",
+    thought: "Fale com o monte, não apenas sobre o monte.",
+    action: "Declare em voz alta a solução para o seu problema, ordenando que o obstáculo saia.",
+    reflection: "Jesus nos ensinou a falar *com* o problema (o monte). Muitas vezes reclamamos do monte ou choramos por causa dele, mas raramente usamos nossa autoridade de fé para mandar ele sair. A fé de Deus em nós libera poder criativo. Não olhe para o tamanho da montanha, olhe para o tamanho do seu Deus e use a sua voz para alinhar a realidade terrena com a vontade celestial."
   },
-  3: { 
-    verse: "Se creres, verás a glória de Deus. - Jo 11:40", 
-    thought: "A fé é a lente necessária para ver o milagre acontecer.", 
-    action: "Visualize seu milagre acontecendo e agradeça antecipadamente.", 
-    reflection: "Jesus disse isso a Marta diante da tumba de Lázaro. Marta olhava para a realidade da morte e do mau cheiro; Jesus a chamava para olhar com a ótica da fé. A fé não nega a realidade, ela a supera. Crer é o pré-requisito para ver a glória manifesta. Ouse crer contra a esperança." 
+  3: {
+    verse: "Gritou o povo, e tocaram as trombetas... e o muro caiu abaixo. - Josué 6:20",
+    thought: "A adoração derruba muralhas que a força humana não move.",
+    action: "Tire 15 minutos hoje para louvar a Deus *antes* de ver a vitória, como se ela já tivesse acontecido.",
+    reflection: "Jericó era impenetrável. A estratégia de Deus foi ilógica: rodear, tocar trombetas e gritar. Foi um ato de adoração e obediência, não de guerra militar. Quando louvamos a Deus no meio do problema, confundimos o inimigo e liberamos o poder de Deus. O louvor é a arma mais poderosa para causas impossíveis. Ele traz a presença de Deus, e onde Deus está, muralhas não podem ficar de pé."
   },
-  4: { 
-    verse: "Tudo é possível ao que crê. - Mc 9:23", 
-    thought: "A fé destranca o arquivo de possibilidades do céu.", 
-    action: "Declare sua fé em voz alta contra as dúvidas que surgirem.", 
-    reflection: "Jesus coloca a chave na mão do crente. O potencial de Deus é infinito ('tudo é possível'), mas a nossa fé é o canal condutor. Não é sobre a força da nossa mente, mas sobre a confiança na Pessoa certa. A fé é a moeda do Reino; use-a para 'sacar' o milagre que você precisa." 
+  4: {
+    verse: "Profetiza sobre estes ossos, e dize-lhes: Ossos secos, ouvi a palavra do Senhor. - Ezequiel 37:4",
+    thought: "Deus pode trazer vida onde só existe morte e sequidão.",
+    action: "Profetize vida sobre a área mais 'seca' da sua vida (finanças, saúde, sonhos).",
+    reflection: "O vale de ossos secos representava a total desesperança ('nossa esperança pereceu'). Deus chamou o profeta para ser parceiro no milagre através da palavra profética. Não aceite a morte dos seus sonhos como final. O Espírito de Deus pode entrar nos 'ossos secos' da sua situação e levantar um grande exército. Sua boca é o instrumento que Deus quer usar para soprar vida hoje."
   },
-  5: { 
-    verse: "Clama a mim, e responder-te-ei... - Jr 33:3", 
-    thought: "O clamor intenso move a mão de Deus.", 
-    action: "Separe um tempo hoje para um clamor intenso e sincero.", 
-    reflection: "Existe uma diferença entre rezar e clamar. Clamar é o grito da alma desesperada que sabe que só Deus pode ajudar. Deus promete não apenas ouvir, mas responder e revelar coisas grandes. Não murmure sobre o problema; clame àquele que tem a solução. O clamor sobe como incenso ao trono." 
+  5: {
+    verse: "Tirai a pedra... Não te disse que, se creres, verás a glória de Deus? - João 11:39-40",
+    thought: "Remova a incredulidade para que o milagre possa sair.",
+    action: "Identifique uma atitude de descrença ('já é tarde demais', 'não tem jeito') e renuncie a ela.",
+    reflection: "Lázaro estava morto há quatro dias. Cheirava mal. A lógica dizia 'acabou'. Mas Jesus mandou tirar a pedra. A pedra muitas vezes é nossa própria racionalidade cética ou autoproteção contra a decepção. Jesus desafia: 'Se creres, verás'. A fé vem antes da visão. Remova a pedra da dúvida hoje e prepare-se para ver a glória de Deus se manifestar onde já havia decomposição."
   },
-  6: { 
-    verse: "As armas da nossa milícia não são carnais... - 2 Co 10:4", 
-    thought: "A batalha por causas impossíveis é espiritual.", 
-    action: "Louve a Deus e ore repreendendo todo mal que impede seu milagre.", 
-    reflection: "Causas impossíveis muitas vezes envolvem resistência espiritual. Não lutamos contra pessoas, mas contra principados. Nossas armas — oração, jejum, Palavra e louvor — são poderosas em Deus para demolir fortalezas. Use as armas certas. O louvor confunde o inimigo e a oração libera os anjos." 
+  6: {
+    verse: "Sol, detém-te em Gibeom... E o sol se deteve, e a lua parou. - Josué 10:12-13",
+    thought: "Deus pode parar o tempo e mudar as leis naturais por você.",
+    action: "Peça a Deus uma intervenção sobrenatural que desafie a lógica do tempo ou das regras humanas.",
+    reflection: "Josué precisava de mais tempo para vencer a batalha, então ele pediu o impossível astronômico: que o sol parasse. E Deus ouviu a voz de um homem! Isso nos mostra que, quando estamos alinhados com o propósito de Deus, até as leis da física se curvam. Não limite Deus ao tempo cronológico (Chronos); Ele vive no Kairós e pode acelerar, parar ou reverter o tempo ao seu favor."
   },
-  7: { 
-    verse: "Operando eu, quem impedirá? - Is 43:13", 
-    thought: "A soberania de Deus é a garantia da sua vitória.", 
-    action: "Descanse na certeza de que Deus está no controle absoluto.", 
-    reflection: "Quando Deus decide agir, nenhuma força no inferno ou na terra pode pará-Lo. Ele é o 'Eu Sou' desde antes do tempo. Se Ele decretou o seu milagre, ele acontecerá. Encerre esta jornada descansando na onipotência de Deus. O que era impossível para você, já é realidade nas mãos dEle." 
+  7: {
+    verse: "Mas em todas estas coisas somos mais do que vencedores, por aquele que nos amou. - Romanos 8:37",
+    thought: "A vitória final já foi garantida na ressurreição.",
+    action: "Celebre! Agradeça a Deus porque a causa já está ganha nas mãos dEle.",
+    reflection: "A maior causa impossível era a nossa salvação e a derrota da morte. Jesus venceu isso na cruz. Se Ele fez o maior, fará o menor. Ser 'mais que vencedor' significa que ganhamos uma batalha que Jesus lutou por nós. Encerre esta jornada não com ansiedade, mas com a paz de quem sabe que o Advogado Fiel está cuidando do seu caso. O impossível para os homens é o palco para o milagre de Deus."
   }
 };
 
